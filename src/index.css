@@ -11,3 +11,58 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.highlight {
+  color:inherit;
+  position: relative;
+}
+
+.highlight abbr {
+  position: relative;
+}
+
+.highlight:before {
+  content: '';
+  background-color: rgb(108, 67, 224);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  margin-left: -3px;
+  width: 6px;
+  height: 6px;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: inherit;
+}
+
+.react-calendar__tile--active {
+  background: transparent!important;
+  color: inherit;
+  position: relative;
+}
+
+.react-calendar__tile--active:before {
+  content: '';
+  background-color: transparent;
+  border: 2px solid rgb(108, 67, 224) !important;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -17.5px;
+  margin-left: -17.5px;
+  width: 35px;
+  height: 35px;
+}
+
+.single-event{
+  border-bottom: 2px solid #666;
+}
+
+.react-calendar__tile--hasActive,
+.react-calendar__tile--hasActive:enabled:hover, 
+.react-calendar__tile--hasActive:enabled:focus {
+  background: rgba(108, 67, 224, 0.5);
+}
