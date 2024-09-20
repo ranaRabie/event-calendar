@@ -13,7 +13,7 @@ code {
 }
 
 .highlight {
-  color:inherit;
+  color:inherit!important;
   position: relative;
 }
 
@@ -34,12 +34,12 @@ code {
 }
 
 .react-calendar__month-view__days__day--weekend {
-  color: inherit;
+  color: inherit!important;
 }
 
 .react-calendar__tile--active {
   background: transparent!important;
-  color: inherit;
+  color: inherit!important;
   position: relative;
 }
 
