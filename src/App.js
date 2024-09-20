@@ -3,6 +3,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // Import default styles
 import './index.css';
 import moment from 'moment';
+import { ExtensionProvider40 } from '@looker/extension-sdk-react';
 
 const eventsDummy = [
   {
@@ -136,7 +137,9 @@ const CustomCalendar = () => {
 function App() {
   return (
     <div className="App">
-      <CustomCalendar />
+      {/* <ExtensionProvider40 chattyTimeout={-1}> */}
+        <CustomCalendar />
+      {/* </ExtensionProvider40> */}
     </div>
   );
 }
