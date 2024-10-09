@@ -35,7 +35,7 @@ code {
 .app-wrapper {
   padding: 0 1rem;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex-wrap: wrap;
 }
 
@@ -48,10 +48,11 @@ code {
 }
 
 .events-wrapper {
-  flex: 0 0 63%;
-  width: 63%;
+  flex: 0 0 65%;
+  width: 65%;
   overflow: auto;
   max-height: 565px;
+  padding-left: 0.5rem;
 }
 
 .highlight {

@@ -4,6 +4,11 @@ import moment from 'moment';
 import { ExtensionContext } from '@looker/extension-sdk-react';
 import { Filters } from './Filters';
 import eventsDummy from './data.json'; 
+import { EventsTable } from './EventsTable';
+import { DividendTable } from './DividendTable';
+import { GeneralAssemblyMeetingTable } from './GeneralAssemblyMeetingTable';
+import { BoardOfDirectorsSessionTable } from './BoardOfDirectorsSessionTable';
+import { AnnouncementTable } from './AnnouncementTable';
 
 export const CustomCalendar = () => {
     // const extensionContext = useContext(ExtensionContext);
@@ -14,6 +19,7 @@ export const CustomCalendar = () => {
     const [eventsFilterList, setEventsFilterList] = useState(null);
     const [selectedEvents, setSelectedEvents] = useState(null);
     const [filterData, setFilterData] = useState(null);
+    const [actionTypes, setActionTypes] = useState(null);
 
     useEffect(() => {
         const { firstDateOfMonth, lastDateOfMonth } = getMonthStartEndDate(new Date());
@@ -73,9 +79,26 @@ export const CustomCalendar = () => {
 
         if (filteredEvents.length > 0) {
             setSelectedEvents(filteredEvents);
-            selectedEvents.map(event => {
 
+            const actionTypesData = {
+                'Dividend': [],
+                'General Assembly Meeting': [],
+                'Board of Directors Session': [],
+                'Announcement': []
+            };
+            filteredEvents.map(event => {
+                if (event['v_corporate_actions_materialized.entry_type'] === 'Action' && event['v_corporate_actions_materialized.action_type'] === 'Dividend') {
+                    actionTypesData['Dividend'].push(event);
+                } else if (event['v_corporate_actions_materialized.entry_type'] === 'Event' && event['v_corporate_actions_materialized.action_type'] === 'General Assembly Meeting') {
+                    actionTypesData['General Assembly Meeting'].push(event);
+                } else if (event['v_corporate_actions_materialized.entry_type'] === 'Event' && event['v_corporate_actions_materialized.action_type'] === 'Board of Directors Session') {
+                    actionTypesData['Board of Directors Session'].push(event);
+                } else if (event['v_corporate_actions_materialized.entry_type'] === 'Announcement') {
+                    actionTypesData['Announcement'].push(event);
+                }
             });
+
+            setActionTypes(actionTypesData);
         } else {
             setSelectedEvents(null);
         }
@@ -132,45 +155,29 @@ export const CustomCalendar = () => {
 
             <div className='events-wrapper'>
                 {selectedEvents ? (
-                    <div className='events-list'>
-                        <h3>Corporate Action - Standard</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Company Name</th>
-                                    <th>Symbol</th>
-                                    <th>Action Type</th>
-                                    <th>Action Description</th>
-                                    <th>Action Date</th>
-                                    <th>Industry</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {selectedEvents.map((event, idx) => (
-                                    <tr className='single-event' key={idx}>
-                                        <td>{
-                                            event['v_corporate_actions_materialized.company_full_name'] ? event['v_corporate_actions_materialized.company_full_name'] : '-'    
-                                        }</td>
-                                        <td>{
-                                            event['v_corporate_actions_materialized.symbol'] ? event['v_corporate_actions_materialized.symbol'] : '-'
-                                        }</td>
-                                        <td>{
-                                            event['v_corporate_actions_materialized.action_type'] ? event['v_corporate_actions_materialized.action_type'] : '-'    
-                                        }</td>
-                                        <td>{
-                                            event['v_corporate_actions_materialized.action_description'] ? event['v_corporate_actions_materialized.action_description'] : '-' 
-                                        }</td>
-                                        <td>{
-                                            event['v_corporate_actions_materialized.action_date'] ? event['v_corporate_actions_materialized.action_date'] : '-'
-                                        }</td>
-                                        <td>{
-                                            event['v_corporate_actions_materialized.industry'] ? event['v_corporate_actions_materialized.industry'] : '-'
-                                        }</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <>
+                        <EventsTable list={selectedEvents}></EventsTable>
+                        
+                        {
+                            actionTypes && actionTypes['Dividend'].length > 0 ?
+                            <DividendTable list={actionTypes['Dividend']}></DividendTable> : ''
+                        }
+
+                        {
+                            actionTypes && actionTypes['General Assembly Meeting'].length > 0 ?
+                            <GeneralAssemblyMeetingTable list={actionTypes['General Assembly Meeting']}></GeneralAssemblyMeetingTable> : ''
+                        }
+
+                        {
+                            actionTypes && actionTypes['Board of Directors Session'].length > 0 ?
+                            <BoardOfDirectorsSessionTable list={actionTypes['Board of Directors Session']}></BoardOfDirectorsSessionTable> : ''
+                        }
+
+                        {
+                            actionTypes && actionTypes['Announcement'].length > 0 ?
+                            <AnnouncementTable list={actionTypes['Announcement']}></AnnouncementTable> : ''
+                        }
+                    </>
                 ) : ''}
             </div>
         </div>
