@@ -33,7 +33,7 @@ export const Filters = ({filterData, onFiltersUpdate}) => {
     }
     
     return (
-        <form>
+        <form className="filters">
             <select ref={companyRef}>
                 <option value="all">all</option>
                 {filterData && filterData.companyName.map((filter, idx) => <option value={filter} key={idx}>{filter}</option>)}
