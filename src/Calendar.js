@@ -20,6 +20,7 @@ export const CustomCalendar = () => {
     const [selectedEvents, setSelectedEvents] = useState(null);
     const [filterData, setFilterData] = useState(null);
     const [actionTypes, setActionTypes] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const { firstDateOfMonth, lastDateOfMonth } = getMonthStartEndDate(new Date());
@@ -28,6 +29,7 @@ export const CustomCalendar = () => {
     }, []);
 
     const fetchData = async (startDate, endDate) => {
+        setIsLoading(true);
         setSelectedEvents(null);
         // RUN INLINE QUERY
         // select action_date, action_type, company_full_name, industry, isin, symbol from `stg-dev-lkh-23bl6.stg_dev_bqd_product_ca.v_corporate_actions_materialized` limit 1000
@@ -71,6 +73,8 @@ export const CustomCalendar = () => {
     
             setFilterData(filterDataArr);
         }
+        
+        setIsLoading(false);
     }
 
     const handleSelectDate = value => {
@@ -138,6 +142,11 @@ export const CustomCalendar = () => {
         <div className='app-wrapper'>
             <Filters filterData={filterData} onFiltersUpdate={onFiltersUpdate} />
             <div className='calendar-wrapper'>
+                {isLoading ? (
+                    <div class="loader">
+                        <div class="loaderBar"></div>
+                    </div>
+                ) : ''}
                 <Calendar
                     style={{ height: 500 }}
                     onChange={setDate}

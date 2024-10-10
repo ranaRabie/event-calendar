@@ -19,17 +19,17 @@ code {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 
 .app-wrapper {
@@ -56,7 +56,7 @@ code {
 }
 
 .highlight {
-  color:inherit!important;
+  color: inherit !important;
   position: relative;
 }
 
@@ -77,17 +77,17 @@ code {
 }
 
 .react-calendar__month-view__days__day--weekend {
-  color: inherit!important;
+  color: inherit !important;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
-  color: #757575!important;
-  background-color: #eee!important;
+  color: #757575 !important;
+  background-color: #eee !important;
 }
 
 .react-calendar__tile--active {
-  background: transparent!important;
-  color: inherit!important;
+  background: transparent !important;
+  color: inherit !important;
   position: relative;
 }
 
@@ -105,25 +105,27 @@ code {
   height: 35px;
 }
 
-.single-event{
+.single-event {
   border-bottom: 2px solid #666;
 }
 
 .react-calendar__tile--hasActive,
-.react-calendar__tile--hasActive:enabled:hover, 
+.react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
   background: rgba(0, 140, 255, 0.5);
 }
 
 .react-calendar__tile--now {
-  background: rgba(0, 140, 255, 0.2)!important;
+  background: rgba(0, 140, 255, 0.2) !important;
 }
 
 .react-calendar__tile--now.react-calendar__tile--active {
-  background: transparent!important;
+  background: transparent !important;
 }
 
-table, td, th {
+table,
+td,
+th {
   border: 1px solid;
   text-align: center;
   font-size: 0.8rem;
@@ -169,4 +171,50 @@ table {
   color: #fff;
   width: 65px;
   border-radius: 3px;
+}
+
+.loader {
+  width: 320px;
+  margin: 0 auto;
+  border-radius: 10px;
+  position: relative;
+  padding: 1px;
+}
+
+.loader .loaderBar {
+  position: absolute;
+  border-radius: 10px;
+  top: 0;
+  right: 100%;
+  bottom: 0;
+  left: 0;
+  background: rgb(0, 140, 255);
+  width: 0;
+  animation: borealisBar 2s linear infinite;
+}
+
+@keyframes borealisBar {
+  0% {
+    left: 0%;
+    right: 100%;
+    width: 0%;
+  }
+
+  10% {
+    left: 0%;
+    right: 75%;
+    width: 25%;
+  }
+
+  90% {
+    right: 0%;
+    left: 75%;
+    width: 25%;
+  }
+
+  100% {
+    left: 100%;
+    right: 0%;
+    width: 0%;
+  }
 }
