@@ -155,10 +155,17 @@ table {
   margin: 0 -0.3rem;
 }
 
+.filters label {
+  font-size: 0.85rem;
+  display: block;
+  padding-left: 0.4rem;
+}
+
 .filters select {
   width: 200px;
-  margin: 0.5rem 0.3rem;
+  margin: 0.2rem 0.3rem 0.5rem;
   padding: 0.3rem;
+  display: block;
 }
 
 .filters button {

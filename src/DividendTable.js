@@ -18,19 +18,19 @@ export const DividendTable = ({ list }) => {
                     {list.map((listItem, idx) => (
                         <tr className='single-event' key={idx}>
                             <td>{
-                                listItem['v_corporate_actions_materialized.dividends_announcement_date'] ? listItem['v_corporate_actions_materialized.dividends_announcement_date'] : '-'
+                                listItem['v_corporate_actions.dividends_announcement_date'] ? listItem['v_corporate_actions.dividends_announcement_date'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.dividends_eligibility_date'] ? listItem['v_corporate_actions_materialized.dividends_eligibility_date'] : '-'
+                                listItem['v_corporate_actions.dividends_eligibility_date'] ? listItem['v_corporate_actions.dividends_eligibility_date'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.dividends_distribution_method'] ? listItem['v_corporate_actions_materialized.dividends_distribution_method'] : '-'
+                                listItem['v_corporate_actions.dividends_distribution_method'] ? listItem['v_corporate_actions.dividends_distribution_method'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.dividends_distribution_amount'] ? listItem['v_corporate_actions_materialized.dividends_distribution_amount'] : '-'
+                                listItem['v_corporate_actions.dividends_distribution_amount'] ? listItem['v_corporate_actions.dividends_distribution_amount'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.dividends_ex_date'] ? listItem['v_corporate_actions_materialized.dividends_ex_date'] : '-'
+                                listItem['v_corporate_actions.dividends_ex_date'] ? listItem['v_corporate_actions.dividends_ex_date'] : '-'
                             }</td>
                         </tr>
                     ))}

@@ -12,29 +12,29 @@ export const EventsTable = ({ list }) => {
                         <th>Action Type</th>
                         <th>Action Description</th>
                         <th>Action Date</th>
-                        <th>Industry</th>
+                        <th>industry</th>
                     </tr>
                 </thead>
                 <tbody>
                     {list.map((listItem, idx) => (
                         <tr className='single-event' key={idx}>
                             <td>{
-                                listItem['v_corporate_actions_materialized.company_full_name'] ? listItem['v_corporate_actions_materialized.company_full_name'] : '-'
+                                listItem['v_corporate_actions.long_name_en'] ? listItem['v_corporate_actions.long_name_en'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.symbol'] ? listItem['v_corporate_actions_materialized.symbol'] : '-'
+                                listItem['v_corporate_actions.symbol'] ? listItem['v_corporate_actions.symbol'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.action_type'] ? listItem['v_corporate_actions_materialized.action_type'] : '-'
+                                listItem['v_corporate_actions.action_type'] ? listItem['v_corporate_actions.action_type'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.action_description'] ? listItem['v_corporate_actions_materialized.action_description'] : '-'
+                                listItem['v_corporate_actions.action_description'] ? listItem['v_corporate_actions.action_description'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.action_date'] ? listItem['v_corporate_actions_materialized.action_date'] : '-'
+                                listItem['v_corporate_actions.action_date'] ? listItem['v_corporate_actions.action_date'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.industry'] ? listItem['v_corporate_actions_materialized.industry'] : '-'
+                                listItem['v_corporate_actions.industry_group_en'] ? listItem['v_corporate_actions.industry_group_en'] : '-'
                             }</td>
                         </tr>
                     ))}

@@ -17,16 +17,16 @@ export const GeneralAssemblyMeetingTable = ({ list }) => {
                     {list.map((listItem, idx) => (
                         <tr className='single-event' key={idx}>
                             <td>{
-                                listItem['v_corporate_actions_materialized.gam_type_of_assembly'] ? listItem['v_corporate_actions_materialized.gam_type_of_assembly'] : '-'
+                                listItem['v_corporate_actions.gam_type_of_assembly'] ? listItem['v_corporate_actions.gam_type_of_assembly'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.gam_agm_date'] ? listItem['v_corporate_actions_materialized.gam_agm_date'] : '-'
+                                listItem['v_corporate_actions.gam_agm_date'] ? listItem['v_corporate_actions.gam_agm_date'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.gam_holding_site'] ? listItem['v_corporate_actions_materialized.gam_holding_site'] : '-'
+                                listItem['v_corporate_actions.gam_holding_site'] ? listItem['v_corporate_actions.gam_holding_site'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.gam_status'] ? listItem['v_corporate_actions_materialized.gam_status'] : '-'
+                                listItem['v_corporate_actions.gam_status'] ? listItem['v_corporate_actions.gam_status'] : '-'
                             }</td>
                         </tr>
                     ))}

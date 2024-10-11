@@ -6,7 +6,7 @@ export const AnnouncementTable = ({ list }) => {
             <h3>Corporate Action - Announcement</h3>
 
             {list.map((listItem, idx) => (
-                <div key={idx} dangerouslySetInnerHTML={{__html: listItem['v_corporate_actions_materialized.announcement_details']}}/>
+                <div key={idx} dangerouslySetInnerHTML={{__html: listItem['v_corporate_actions.announcement_details']}}/>
             ))}
 
         </div>

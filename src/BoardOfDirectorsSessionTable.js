@@ -19,22 +19,22 @@ export const BoardOfDirectorsSessionTable = ({ list }) => {
                     {list.map((listItem, idx) => (
                         <tr className='single-event' key={idx}>
                             <td>{
-                                listItem['v_corporate_actions_materialized.bods_start_date'] ? listItem['v_corporate_actions_materialized.bods_start_date'] : '-'
+                                listItem['v_corporate_actions.bods_start_date'] ? listItem['v_corporate_actions.bods_start_date'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.bods_end_date'] ? listItem['v_corporate_actions_materialized.bods_end_date'] : '-'
+                                listItem['v_corporate_actions.bods_end_date'] ? listItem['v_corporate_actions.bods_end_date'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.bods_session_type'] ? listItem['v_corporate_actions_materialized.bods_session_type'] : '-'
+                                listItem['v_corporate_actions.bods_session_type'] ? listItem['v_corporate_actions.bods_session_type'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.bods_number_of_board_of_directors'] ? listItem['v_corporate_actions_materialized.bods_number_of_board_of_directors'] : '-'
+                                listItem['v_corporate_actions.bods_number_of_board_of_directors'] ? listItem['v_corporate_actions.bods_number_of_board_of_directors'] : '-'
                             }</td>
                              <td>{
-                                listItem['v_corporate_actions_materialized.bods_application_start_date'] ? listItem['v_corporate_actions_materialized.bods_application_start_date'] : '-'
+                                listItem['v_corporate_actions.bods_application_start_date'] ? listItem['v_corporate_actions.bods_application_start_date'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions_materialized.bods_application_end_date'] ? listItem['v_corporate_actions_materialized.bods_application_end_date'] : '-'
+                                listItem['v_corporate_actions.bods_application_end_date'] ? listItem['v_corporate_actions.bods_application_end_date'] : '-'
                             }</td>
                         </tr>
                     ))}
