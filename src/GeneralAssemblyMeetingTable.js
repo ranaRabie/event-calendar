@@ -7,10 +7,10 @@ export const GeneralAssemblyMeetingTable = ({ list }) => {
             <table>
                 <thead>
                     <tr>
-                        <th>type of assembly</th>
-                        <th>agm date</th>
-                        <th>holding site</th>
-                        <th>status</th>
+                        <th>Type of Assembly</th>
+                        <th>AGM Date</th>
+                        <th>Holding Site</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>

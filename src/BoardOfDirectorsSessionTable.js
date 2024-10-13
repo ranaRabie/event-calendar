@@ -7,12 +7,12 @@ export const BoardOfDirectorsSessionTable = ({ list }) => {
             <table>
                 <thead>
                     <tr>
-                        <th>start date</th>
-                        <th>end date</th>
-                        <th>session type</th>
-                        <th>number of board of directors</th>
-                        <th>application start date</th>
-                        <th>application end date</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Session Type</th>
+                        <th>Number of Board of Directors</th>
+                        <th>Application Start Date</th>
+                        <th>Application End Date</th>
                     </tr>
                 </thead>
                 <tbody>

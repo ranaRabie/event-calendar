@@ -7,11 +7,11 @@ export const DividendTable = ({ list }) => {
             <table>
                 <thead>
                     <tr>
-                        <th>announcement date</th>
-                        <th>eligibility date</th>
-                        <th>distribution method</th>
-                        <th>distribution amount</th>
-                        <th>ex date</th>
+                        <th>Announcement date</th>
+                        <th>Eligibility Date</th>
+                        <th>Distribution Method</th>
+                        <th>Distribution Amount</th>
+                        <th>EX Date</th>
                     </tr>
                 </thead>
                 <tbody>

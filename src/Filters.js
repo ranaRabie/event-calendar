@@ -28,6 +28,19 @@ export const Filters = forwardRef(({filterData, onFiltersUpdate}, ref) => {
         actionTypeRef.current.value = 'all';
     }
 
+    const onSelectCompanyChange = () => {
+        if (companyRef.current.value != 'all') {
+            symbolRef.current.value = 'all';
+            industry_group_enRef.current.value = 'all';
+
+            symbolRef.current.disabled = true;
+            industry_group_enRef.current.disabled  = true;
+        } else {
+            symbolRef.current.disabled = false;
+            industry_group_enRef.current.disabled  = false;
+        }
+    }
+
     useImperativeHandle(ref, () => ({
         clearForm() {
             clearFilters();
@@ -38,7 +51,7 @@ export const Filters = forwardRef(({filterData, onFiltersUpdate}, ref) => {
         <form className="filters">
             <div>
                 <label>Company Name</label>
-                <select ref={companyRef}>
+                <select ref={companyRef} onChange={onSelectCompanyChange}>
                     <option value="all">all</option>
                     {filterData && filterData.industry_group_en.map((filter, idx) => <option value={filter} key={idx}>{filter}</option>)}
                 </select>

@@ -12,7 +12,7 @@ export const EventsTable = ({ list }) => {
                         <th>Action Type</th>
                         <th>Action Description</th>
                         <th>Action Date</th>
-                        <th>industry</th>
+                        <th>Industry</th>
                     </tr>
                 </thead>
                 <tbody>
