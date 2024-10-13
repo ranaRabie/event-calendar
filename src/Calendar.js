@@ -69,7 +69,7 @@ export const CustomCalendar = () => {
                 setEventsFilterList(eventsDummy); // Set it when set eventsList
 
                 const filterDataArr = {
-                    industry_group_en: [...new Set(eventsDummy.map(event => event['v_corporate_actions.long_name_en']))],
+                    long_name_en: [...new Set(eventsDummy.map(event => event['v_corporate_actions.long_name_en']))],
                     symbol: [...new Set(eventsDummy.map(event => event['v_corporate_actions.symbol']))],
                     industry_group_en: [...new Set(eventsDummy.map(event => event['v_corporate_actions.industry_group_en']))],
                     actionType: [...new Set(eventsDummy.map(event => event['v_corporate_actions.action_type']))]
@@ -138,8 +138,8 @@ export const CustomCalendar = () => {
     const onFiltersUpdate = (filtersList) => {
         setSelectedEvents(null);
         const filteredEvents = eventsList.filter(event =>
-            (!filtersList.industry_group_en || event['v_corporate_actions.long_name_en'] === filtersList.industry_group_en) &&
-            (!filtersList.symbol || event['v_corporate_actions.symbol'] === filtersList.symbol) &&
+            (!filtersList.long_name_en || event['v_corporate_actions.long_name_en'] === filtersList.long_name_en) &&
+            (!filtersList.symbol || event['v_corporate_actions.symbol'] === parseInt(filtersList.symbol)) &&
             (!filtersList.industry_group_en || event['v_corporate_actions.industry_group_en'] === filtersList.industry_group_en) &&
             (!filtersList.actionType || event['v_corporate_actions.action_type'] === filtersList.actionType)
         );
