@@ -29,7 +29,7 @@ export const Filters = forwardRef(({filterData, onFiltersUpdate}, ref) => {
     }
 
     const onSelectCompanyChange = () => {
-        if (companyRef.current.value != 'all') {
+        if (companyRef.current.value !== 'all') {
             symbolRef.current.value = 'all';
             industry_group_enRef.current.value = 'all';
 
