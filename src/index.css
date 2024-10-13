@@ -48,8 +48,8 @@ code {
 }
 
 .events-wrapper {
-  flex: 0 0 65%;
-  width: 65%;
+  flex: 0 0 57%;
+  width: 57%;
   overflow: auto;
   max-height: 565px;
   padding-left: 0.5rem;
@@ -159,10 +159,11 @@ table {
   font-size: 0.85rem;
   display: block;
   padding-left: 0.4rem;
+  margin-top: 0.5rem;
 }
 
 .filters select {
-  width: 200px;
+  width: 230px;
   margin: 0.2rem 0.3rem 0.5rem;
   padding: 0.3rem;
   display: block;
@@ -178,6 +179,8 @@ table {
   color: #fff;
   width: 65px;
   border-radius: 3px;
+  position: relative;
+  top: 10px;
 }
 
 .loader {
@@ -224,4 +227,9 @@ table {
     right: 0%;
     width: 0%;
   }
+}
+
+.error {
+  color: red;
+  margin-bottom: 0.2rem;
 }

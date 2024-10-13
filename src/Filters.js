@@ -11,7 +11,7 @@ export const Filters = forwardRef(({filterData, onFiltersUpdate}, ref) => {
         e.preventDefault();
 
         const selectedFilters = {
-            'companyName': companyRef.current.value !== 'all' && companyRef.current.value,
+            'industry_group_en': companyRef.current.value !== 'all' && companyRef.current.value,
             'symbol': symbolRef.current.value !== 'all' && symbolRef.current.value,
             'industry_group_en': industry_group_enRef.current.value !== 'all' && industry_group_enRef.current.value,
             'actionType': actionTypeRef.current.value !== 'all' && actionTypeRef.current.value,
@@ -40,7 +40,7 @@ export const Filters = forwardRef(({filterData, onFiltersUpdate}, ref) => {
                 <label>Company Name</label>
                 <select ref={companyRef}>
                     <option value="all">all</option>
-                    {filterData && filterData.companyName.map((filter, idx) => <option value={filter} key={idx}>{filter}</option>)}
+                    {filterData && filterData.industry_group_en.map((filter, idx) => <option value={filter} key={idx}>{filter}</option>)}
                 </select>
             </div>
             <div>
