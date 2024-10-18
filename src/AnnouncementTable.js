@@ -35,7 +35,10 @@ export const AnnouncementTable = ({ list }) => {
 
             // Get the updated HTML string
             const updatedHtml = doc.body.innerHTML;
-            data.push(updatedHtml);
+            data.push({
+                "v_corporate_actions.action_type": listItem["v_corporate_actions.action_type"],
+                "v_corporate_actions.announcement_details": updatedHtml
+            });
         })
 
 
@@ -45,12 +48,12 @@ export const AnnouncementTable = ({ list }) => {
 
     return (
         <div className='events-list'>
-            <h3>Corporate Action - Announcement</h3>
-
             {parsedData && parsedData.map((dataItem, idx) => (
-                <div key={idx} dangerouslySetInnerHTML={{ __html: dataItem }} />
+                <>
+                    <h3>Announcement - {dataItem['v_corporate_actions.action_type']}</h3>
+                    <div key={idx} dangerouslySetInnerHTML={{ __html: dataItem["v_corporate_actions.announcement_details"] }} />
+                </>
             ))}
-
         </div>
     )
 } 

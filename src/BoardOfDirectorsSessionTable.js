@@ -3,7 +3,7 @@ import React from "react";
 export const BoardOfDirectorsSessionTable = ({ list }) => {
     return (
         <div className='events-list'>
-            <h3>Corporate Action - Board of Directors Session</h3>
+            <h3>Board of Directors Session</h3>
             <table>
                 <thead>
                     <tr>

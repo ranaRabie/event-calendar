@@ -3,7 +3,7 @@ import React from "react";
 export const DividendTable = ({ list }) => {
     return (
         <div className='events-list'>
-            <h3>Corporate Action - Dividend</h3>
+            <h3>Dividend</h3>
             <table>
                 <thead>
                     <tr>

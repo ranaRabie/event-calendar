@@ -3,7 +3,7 @@ import React from "react";
 export const EventsTable = ({ list }) => {
     return (
         <div className='events-list'>
-            <h3>Corporate Action - Standard</h3>
+            <h3>Standard</h3>
             <table>
                 <thead>
                     <tr>
