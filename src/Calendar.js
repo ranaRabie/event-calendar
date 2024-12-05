@@ -16,27 +16,55 @@ export const CustomCalendar = () => {
     const filtersRef = useRef();
     const [date, setDate] = useState(new Date());
     const [eventsList, setEventsList] = useState(null); // Should use setEventsList when calling API
-    const [eventsFilterList, setEventsFilterList] = useState(null);
     const [selectedEvents, setSelectedEvents] = useState(null);
-    const [filterData, setFilterData] = useState(null);
     const [actionTypes, setActionTypes] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const { firstDateOfMonth, lastDateOfMonth } = getMonthStartEndDate(new Date());
-
-        fetchData(firstDateOfMonth, lastDateOfMonth);
+        const filterDates = filtersRef.current.getFilterDates();
+        
+        fetchData({
+            "company_full_name": false,
+            "symbol": false,
+            "industry_group_en": false,
+            "actionType": false,
+            "startDate": filterDates.startDate,
+            "endDate": filterDates.endDate
+        });
     }, []);
 
-    const fetchData = async (startDate, endDate) => {
+    const fetchData = async (filters) => {
         setIsLoading(true);
         setSelectedEvents(null);
         setError(null);
-        filtersRef.current.clearForm();
+        
+        const currentFilters = {};
+
+        // eslint-disable-next-line
+        filters.company_full_name ? 
+            currentFilters["v_corporate_actions.company_full_name"] = filters.company_full_name : '';
+
+        // eslint-disable-next-line
+        filters.symbol ? 
+            currentFilters["v_corporate_actions.symbol"] = filters.symbol : '';
+
+        // eslint-disable-next-line
+        filters.industry_group_en ? 
+            currentFilters["v_corporate_actions.industry_group_en"] = filters.industry_group_en : '';
+
+        // eslint-disable-next-line
+        filters.actionType ? 
+            currentFilters["v_corporate_actions.action-type"] = filters.actionType : '';
+
+        // eslint-disable-next-line
+        filters.startDate && filters.endDate ? 
+            currentFilters["v_corporate_actions.action_date"] = `${filters.startDate} to ${filters.endDate}` : '';
+
+
         try {
             // RUN INLINE QUERY
-            // select action_date, action_type, long_name_en, industry_group_en, isin, symbol from `stg-dev-lkh-23bl6.stg_dev_bqd_product_ca.v_corporate_actions` limit 1000
+            // select action_date, action_type, company_full_name, industry_group_en, isin, symbol from `stg-dev-lkh-23bl6.stg_dev_bqd_product_ca.v_corporate_actions` limit 1000
             // const response = await sdk.ok(
             //     sdk.run_inline_query({
             //         result_format: 'json',
@@ -47,7 +75,7 @@ export const CustomCalendar = () => {
             //             fields: [
             //                 'v_corporate_actions.action_date',
             //                 'v_corporate_actions.action_type',
-            //                 'v_corporate_actions.long_name_en',
+            //                 'v_corporate_actions.company_full_name',
             //                 'v_corporate_actions.industry_group_en',
             //                 'v_corporate_actions.isin',
             //                 'v_corporate_actions.symbol',
@@ -55,7 +83,7 @@ export const CustomCalendar = () => {
             //                 'v_corporate_actions.action_description'],
 
             //             filters: {
-            //                 "v_corporate_actions.action_date": `${moment(startDate).format("YYYY/MM/DD")} to ${moment(endDate).format("YYYY/MM/DD")}`
+                                // filters: currentFilters,
             //             },
             //             filter_expression: null,
             //             total: false,
@@ -64,24 +92,6 @@ export const CustomCalendar = () => {
             // );
 
             setEventsList(eventsDummy);
-
-            if (eventsDummy) {
-                setEventsFilterList(eventsDummy); // Set it when set eventsList
-
-                // [...new Set(events.filter(event => event.name !== null).map(event => event.name))]
-
-
-
-                const filterDataArr = {
-                    long_name_en: [...new Set(eventsDummy.filter(event => event['v_corporate_actions.long_name_en'] !== null).map(event => event['v_corporate_actions.long_name_en']))],
-                    symbol: [...new Set(eventsDummy.filter(event => event['v_corporate_actions.symbol'] !== null).map(event => event['v_corporate_actions.symbol']))],
-                    industry_group_en: [...new Set(eventsDummy.filter(event => event['v_corporate_actions.industry_group_en'] !== null).map(event => event['v_corporate_actions.industry_group_en']))],
-                    actionType: [...new Set(eventsDummy.filter(event => event['v_corporate_actions.action_type'] !== null).map(event => event['v_corporate_actions.action_type']))]
-                }
-
-                setFilterData(filterDataArr);
-            }
-
             setIsLoading(false);
         } catch (error) {
             setIsLoading(false);
@@ -92,7 +102,7 @@ export const CustomCalendar = () => {
 
     const handleSelectDate = value => {
         setSelectedEvents(null);
-        const filteredEvents = eventsFilterList.filter(event => event['v_corporate_actions.action_date'] === moment(value).format("YYYY-MM-DD"));
+        const filteredEvents = eventsList.filter(event => event['v_corporate_actions.action_date'] === moment(value).format("YYYY-MM-DD"));
 
         if (filteredEvents.length > 0) {
             setSelectedEvents(filteredEvents);
@@ -122,38 +132,29 @@ export const CustomCalendar = () => {
 
     };
 
-
-    const handleDateChange = ({ activeStartDate }) => {
-        const { firstDateOfMonth, lastDateOfMonth } = getMonthStartEndDate(activeStartDate);
-
-        fetchData(firstDateOfMonth, lastDateOfMonth);
-    };
-
-
     const getMonthStartEndDate = (currentDate) => {
         const firstDateOfMonth = (date = new Date()) =>
             new Date(date.getFullYear(), date.getMonth(), 1);
+
+        // const lastDateOfMonth = (date = new Date()) =>
+        //     new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
         const lastDateOfMonth = (date = new Date()) =>
-            new Date(date.getFullYear(), date.getMonth() + 1, 0);
+            new Date(date.getFullYear(), date.getMonth() + 2, 0);
+
+        console.log(firstDateOfMonth(currentDate), lastDateOfMonth(currentDate));
 
         return { firstDateOfMonth: firstDateOfMonth(currentDate), lastDateOfMonth: lastDateOfMonth(currentDate) };
     }
 
-    const onFiltersUpdate = (filtersList) => {
-        setSelectedEvents(null);
-        const filteredEvents = eventsList.filter(event =>
-            (!filtersList.long_name_en || event['v_corporate_actions.long_name_en'] === filtersList.long_name_en) &&
-            (!filtersList.symbol || event['v_corporate_actions.symbol'] === parseInt(filtersList.symbol)) &&
-            (!filtersList.industry_group_en || event['v_corporate_actions.industry_group_en'] === filtersList.industry_group_en) &&
-            (!filtersList.actionType || event['v_corporate_actions.action_type'] === filtersList.actionType)
-        );
-
-        setEventsFilterList(filteredEvents);
+    const handleFilterChange = (filtersList) => {
+        fetchData(filtersList);
     }
 
     return (
         <div className='app-wrapper'>
-            <Filters filterData={filterData} onFiltersUpdate={onFiltersUpdate} ref={filtersRef} />
+            <Filters handleFilterChange={handleFilterChange} ref={filtersRef} />
+            
             <div className='calendar-wrapper'>
                 {error && <div className='error'>{error}</div>}
                 {isLoading ? (
@@ -163,12 +164,12 @@ export const CustomCalendar = () => {
                 ) : ''}
                 <Calendar
                     style={{ height: 500 }}
+                    showDoubleView
                     onChange={setDate}
                     value={date}
                     onClickDay={handleSelectDate}
-                    onActiveStartDateChange={handleDateChange}
                     tileClassName={({ date, view }) => {
-                        if (eventsFilterList && eventsFilterList.find(event => event['v_corporate_actions.action_date'] === moment(date).format("YYYY-MM-DD"))) {
+                        if (eventsList && eventsList.find(event => event['v_corporate_actions.action_date'] === moment(date).format("YYYY-MM-DD"))) {
                             return 'highlight'
                         }
                     }}

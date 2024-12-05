@@ -19,7 +19,7 @@ export const EventsTable = ({ list }) => {
                     {list.map((listItem, idx) => (
                         <tr className='single-event' key={idx}>
                             <td>{
-                                listItem['v_corporate_actions.long_name_en'] ? listItem['v_corporate_actions.long_name_en'] : '-'
+                                listItem['v_corporate_actions.company_full_name'] ? listItem['v_corporate_actions.company_full_name'] : '-'
                             }</td>
                             <td>{
                                 listItem['v_corporate_actions.symbol'] ? listItem['v_corporate_actions.symbol'] : '-'

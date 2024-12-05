@@ -1,97 +1,178 @@
-import React, { useRef, useImperativeHandle, forwardRef } from "react";
+import React, { useContext, useEffect, useRef, useImperativeHandle, forwardRef, useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+// import { ExtensionContext } from '@looker/extension-sdk-react';
+import filterDummy from './filters.json'
 
-export const Filters = forwardRef(({filterData, onFiltersUpdate}, ref) => {
+export const Filters = forwardRef(({handleFilterChange}, ref) => {
+    // const extensionContext = useContext(ExtensionContext);
+    // const sdk = extensionContext.core40SDK; // Use the appropriate version of the Looker API
+
+    const endDateRange = new Date();
+    const startDateRange = new Date(endDateRange);
+    startDateRange.setDate(endDateRange.getDate() - 1);
+
+    const [filterData, setFilterData] = useState(null);
+    const [dateRange, setDateRange] = useState([new Date(startDateRange), new Date(endDateRange)]);
+    const [startDate, endDate] = dateRange;
+    const [error, setError] = useState(null);
+
     const companyRef = useRef();
     const symbolRef = useRef();
     const industry_group_enRef = useRef();
     const actionTypeRef = useRef();
-    // const dateRangeRef = useRef();
 
-    const updateFilters = (e) => {
+    const [isCompanySelected, setIsCompanySelected] = useState(false);
+    const [isSymbolSelected, setIsSymbolSelected] = useState(false);
+    
+    useEffect(() => {
+        fetchFilterData();
+    }, []);
+
+    const fetchFilterData = async () => {
+        setError(null);
+        
+        // Run Inline Query to get Filters Data from Looker
+        // Companies, Symbols, Industries, ActionTypes
+        try {
+            // RUN INLINE QUERY
+            // select action_date, action_type, company_full_name, industry_group_en, isin, symbol from `stg-dev-lkh-23bl6.stg_dev_bqd_product_ca.v_ca_filters` limit 1000
+            // const response = await sdk.ok(
+            //     sdk.run_inline_query({
+            //         result_format: 'json',
+            //         limit: null,
+            //         body: {
+            //             model: 'client_stg_test_data',
+            //             view: 'v_ca_filters',
+            //             fields: [
+            //                 'v_ca_filters.action_type',
+            //                 'v_ca_filters.company_full_name',
+            //                 'v_ca_filters.industry_group_en',
+            //                 'v_ca_filters.symbol'
+            //             ],
+
+            //             filters: null,
+            //             filter_expression: null,
+            //             total: false,
+            //         }
+            //     })
+            // );
+
+            if (filterDummy) {
+                const filterDataArr = {
+                    company_full_name: [...new Set(filterDummy.filter(event => event['v_ca_filters.company_full_name'] !== null).map(event => event['v_ca_filters.company_full_name']))],
+                    symbol: [...new Set(filterDummy.filter(event => event['v_ca_filters.symbol'] !== null).map(event => event['v_ca_filters.symbol']))],
+                    industry_group_en: [...new Set(filterDummy.filter(event => event['v_ca_filters.industry_group_en'] !== null).map(event => event['v_ca_filters.industry_group_en']))],
+                    actionType: [...new Set(filterDummy.filter(event => event['v_ca_filters.action_type'] !== null).map(event => event['v_ca_filters.action_type']))]
+                }
+
+                setFilterData(filterDataArr);
+            }
+
+        } catch (error) {
+            setError('something went wrong loading filters');
+        }
+
+    }
+
+    const updateFilters = (e, startDate = dateRange[0], endDate = dateRange[1]) => {
         e.preventDefault();
 
         const selectedFilters = {
-            'long_name_en': companyRef.current.value !== 'all' && companyRef.current.value,
+            'company_full_name': companyRef.current.value !== 'all' && companyRef.current.value,
             'symbol': symbolRef.current.value !== 'all' && symbolRef.current.value,
             'industry_group_en': industry_group_enRef.current.value !== 'all' && industry_group_enRef.current.value,
             'actionType': actionTypeRef.current.value !== 'all' && actionTypeRef.current.value,
-            // 'dateRange': 'q'
+            'startDate': `${moment(startDate).format("YYYY/MM/DD")}`,
+            'endDate': `${moment(endDate).format("YYYY/MM/DD")}`
         }
 
-        onFiltersUpdate(selectedFilters);
+        handleFilterChange(selectedFilters);
     }
 
-    const clearFilters = () => {
+    const clearFilters = (e) => {
+        e.preventDefault();
         companyRef.current.value = 'all';
         symbolRef.current.value = 'all';
         industry_group_enRef.current.value = 'all';
         actionTypeRef.current.value = 'all';
-        
-        companyRef.current.disabled = false;
-        symbolRef.current.disabled  = false;
-        industry_group_enRef.current.disabled  = false;
+
+        const currentDateRange = [new Date(startDateRange), new Date(endDateRange)]
+
+        setDateRange(currentDateRange);
+
+        setIsCompanySelected(false);
+        setIsSymbolSelected(false);
+
+        updateFilters(e, currentDateRange[0], currentDateRange[1]);
     }
 
-    const onSelectCompanyChange = () => {
-        if (companyRef.current.value !== 'all') {
-            symbolRef.current.value = 'all';
-            industry_group_enRef.current.value = 'all';
-
-            symbolRef.current.disabled = true;
-            industry_group_enRef.current.disabled  = true;
-        } else {
-            symbolRef.current.disabled = false;
-            industry_group_enRef.current.disabled  = false;
-        }
-    }
-
-    const onSelectSymbolChange = () => {
-        if (symbolRef.current.value !== 'all') {
-            companyRef.current.value = 'all';
-            
-            companyRef.current.disabled  = true;
-        } else {
-            companyRef.current.disabled = false;
-        }
-    }
+    const handleCompanyChange = (e) => {
+        setIsCompanySelected(e.target.value !== "all");
+        setIsSymbolSelected(false);
+    };
+    
+    const handleSymbolChange = (e) => {
+        setIsSymbolSelected(e.target.value !== "all");
+        setIsCompanySelected(false);
+    };
 
     useImperativeHandle(ref, () => ({
         clearForm() {
             clearFilters();
+        },
+        getFilterDates() {
+            return {startDate: `${moment(startDateRange).format("YYYY/MM/DD")}`, endDate: `${moment(endDateRange).format("YYYY/MM/DD")}`}
         }
     }))
     
     return (
-        <form className="filters">
-            <div>
-                <label>Company Name</label>
-                <select ref={companyRef} onChange={onSelectCompanyChange}>
-                    <option value="all">all</option>
-                    {filterData && filterData.long_name_en.map((filter, idx) => <option value={filter} key={idx}>{filter}</option>)}
-                </select>
-            </div>
-            <div>
-                <label>Symbol</label>
-                <select ref={symbolRef} onChange={onSelectSymbolChange}>
-                    <option value="all">all</option>
-                    {filterData && filterData.symbol.map((filter, idx) => <option value={filter} key={idx}>{filter}</option>)}
-                </select>
-            </div>
-            <div>
-                <label>Industry</label>
-                <select ref={industry_group_enRef}>
-                    <option value="all">all</option>
-                    {filterData && filterData.industry_group_en.map((filter, idx) => <option value={filter} key={idx}>{filter}</option>)}
-                </select>
-            </div>
-            <div>
-                <label>Action Type</label>
-                <select ref={actionTypeRef}>
-                    <option value="all">all</option>
-                    {filterData && filterData.actionType.map((filter, idx) => <option value={filter} key={idx}>{filter}</option>)}
-                </select>
-            </div>
-            <button onClick={updateFilters}>Update</button>
-        </form>
+        <>
+            {error && <div className='error'>{error}</div>}
+            <form className="filters">
+                <div>
+                    <label>Company Name</label>
+                    <select ref={companyRef} onChange={handleCompanyChange} disabled={isSymbolSelected}>
+                        <option value="all">all</option>
+                        {filterData && filterData.company_full_name.map((company, idx) => <option value={company} key={idx}>{company}</option>)}
+                    </select>
+                </div>
+                <div>
+                    <label>Symbol</label>
+                    <select ref={symbolRef} onChange={handleSymbolChange} disabled={isCompanySelected}>
+                        <option value="all">all</option>
+                        {filterData && filterData.symbol.map((symbol, idx) => <option value={symbol} key={idx}>{symbol}</option>)}
+                    </select>
+                </div>
+                <div>
+                    <label>Industry</label>
+                    <select ref={industry_group_enRef} disabled={isCompanySelected}>
+                        <option value="all">all</option>
+                        {filterData && filterData.industry_group_en.map((industry, idx) => <option value={industry} key={idx}>{industry}</option>)}
+                    </select>
+                </div>
+                <div>
+                    <label>Action Type</label>
+                    <select ref={actionTypeRef}>
+                        <option value="all">all</option>
+                        {filterData && filterData.actionType.map((action, idx) => <option value={action} key={idx}>{action}</option>)}
+                    </select>
+                </div>
+                <div className="date-picker-wrapper">
+                    <label>Date Range</label>
+                    <DatePicker
+                        selectsRange={true}
+                        startDate={startDate}
+                        endDate={endDate}
+                        onChange={(update) => {
+                            setDateRange(update);
+                        }}
+                    />
+                </div>
+                <button className="submit-filters" onClick={updateFilters}>Apply</button>
+                <button className="clear-filters" onClick={clearFilters}>Clear</button>
+            </form>
+        </>
     )
 })
