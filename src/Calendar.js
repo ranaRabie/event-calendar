@@ -17,7 +17,7 @@ export const CustomCalendar = () => {
     const [date, setDate] = useState(new Date());
     const [eventsList, setEventsList] = useState(null); // Should use setEventsList when calling API
     const [selectedEvents, setSelectedEvents] = useState(null);
-    const [actionTypes, setActionTypes] = useState(null);
+    const [selectedItem, setSelectedItem] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -112,30 +112,12 @@ export const CustomCalendar = () => {
 
     const handleSelectDate = value => {
         setSelectedEvents(null);
+        setSelectedItem(null);
+
         const filteredEvents = eventsList.filter(event => event['v_corporate_actions.action_date'] === moment(value).format("YYYY-MM-DD"));
 
         if (filteredEvents.length > 0) {
             setSelectedEvents(filteredEvents);
-
-            const actionTypesData = {
-                'Dividend': [],
-                'General Assembly Meeting': [],
-                'Board of Directors Session': [],
-                'Announcement': []
-            };
-            filteredEvents.map(event => {
-                if (event['v_corporate_actions.action_type'] === 'Dividend') {
-                    actionTypesData['Dividend'].push(event);
-                } else if (event['v_corporate_actions.action_type'] === 'General Assembly Meeting') {
-                    actionTypesData['General Assembly Meeting'].push(event);
-                } else if (event['v_corporate_actions.action_type'] === 'Board of Directors Session') {
-                    actionTypesData['Board of Directors Session'].push(event);
-                } else if (event['v_corporate_actions.entry_type'] === 'Announcement') {
-                    actionTypesData['Announcement'].push(event);
-                }
-            });
-
-            setActionTypes(actionTypesData);
         } else {
             setSelectedEvents(null);
         }
@@ -160,6 +142,21 @@ export const CustomCalendar = () => {
     const handleFilterChange = (filtersList) => {
         fetchData(filtersList);
     }
+
+    const handleClosePopup = () => {
+        setSelectedItem(null);
+    };
+
+    const handleRowClick = (listItem) => {
+        if (
+          listItem["v_corporate_actions.action_type"] === "Dividend" ||
+          listItem["v_corporate_actions.entry_type"] === "Announcement" ||
+          listItem["v_corporate_actions.action_type"] === "Board of Directors Session" ||
+          listItem["v_corporate_actions.action_type"] === "General Assembly Meeting"
+        ) {
+          setSelectedItem(listItem);
+        }
+    };
 
     return (
         <div className='app-wrapper'>
@@ -190,27 +187,30 @@ export const CustomCalendar = () => {
             <div className='events-wrapper'>
                 {selectedEvents ? (
                     <>
-                        <EventsTable list={selectedEvents}></EventsTable>
+                        <EventsTable list={selectedEvents} onClickItem={handleRowClick}></EventsTable>
 
-                        {
-                            actionTypes && actionTypes['Dividend'].length > 0 ?
-                                <DividendTable list={actionTypes['Dividend']}></DividendTable> : ''
-                        }
+                        <div className='filter-result'>
+                            {selectedItem && <button onClick={handleClosePopup} className="close-button">X</button>}
+                            {
+                                selectedItem && selectedItem['v_corporate_actions.action_type'] === 'Dividend' ?
+                                    <DividendTable listItem={selectedItem}></DividendTable> : ''
+                            }
+                            
+                            {
+                                selectedItem && selectedItem['v_corporate_actions.action_type'] === 'Board of Directors Session' ?
+                                    <BoardOfDirectorsSessionTable listItem={selectedItem}></BoardOfDirectorsSessionTable> : ''
+                            }
 
-                        {
-                            actionTypes && actionTypes['General Assembly Meeting'].length > 0 ?
-                                <GeneralAssemblyMeetingTable list={actionTypes['General Assembly Meeting']}></GeneralAssemblyMeetingTable> : ''
-                        }
+                            {
+                                selectedItem && selectedItem['v_corporate_actions.action_type'] === 'General Assembly Meeting' ?
+                                    <GeneralAssemblyMeetingTable listItem={selectedItem}></GeneralAssemblyMeetingTable> : ''
+                            }
 
-                        {
-                            actionTypes && actionTypes['Board of Directors Session'].length > 0 ?
-                                <BoardOfDirectorsSessionTable list={actionTypes['Board of Directors Session']}></BoardOfDirectorsSessionTable> : ''
-                        }
-
-                        {
-                            actionTypes && actionTypes['Announcement'].length > 0 ?
-                                <AnnouncementTable list={actionTypes['Announcement']}></AnnouncementTable> : ''
-                        }
+                            {
+                                selectedItem && selectedItem['v_corporate_actions.entry_type'] === 'Announcement' ?
+                                    <AnnouncementTable listItem={selectedItem}></AnnouncementTable> : ''
+                            }
+                        </div>
                     </>
                 ) : ''}
             </div>

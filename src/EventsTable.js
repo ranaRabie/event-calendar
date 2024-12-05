@@ -1,6 +1,10 @@
 import React from "react";
 
-export const EventsTable = ({ list }) => {
+export const EventsTable = ({ list, onClickItem }) => {
+    const onRowClick = (listItem) => {
+        onClickItem(listItem);
+    }
+
     return (
         <div className='events-list'>
             <h3>Standard</h3>
@@ -17,7 +21,7 @@ export const EventsTable = ({ list }) => {
                 </thead>
                 <tbody>
                     {list.map((listItem, idx) => (
-                        <tr className='single-event' key={idx}>
+                        <tr className='single-event' key={idx} onClick={() => onRowClick(listItem)}>
                             <td>{
                                 listItem['v_corporate_actions.company_full_name'] ? listItem['v_corporate_actions.company_full_name'] : '-'
                             }</td>
