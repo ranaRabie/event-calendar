@@ -1,6 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export const EventsTable = ({ list, onClickItem }) => {
+    const [sortConfig, setSortConfig] = useState({
+        key: null,
+        isAsc: false
+    });
+  
+    let sortableItems = [...list];
+    
+    if (sortConfig.key !== null) {
+        if (sortConfig.isAsc) {
+            sortableItems.sort((a, b) =>
+              a[sortConfig.key].toLowerCase() < b[sortConfig.key].toLowerCase() ? -1 : 1
+            );
+        } else {
+            sortableItems.sort((a, b) =>
+                a[sortConfig.key].toLowerCase() > b[sortConfig.key].toLowerCase() ? -1 : 1
+            );
+        }
+    }
+    
+
     const onRowClick = (listItem) => {
         onClickItem(listItem);
     }
@@ -11,16 +31,33 @@ export const EventsTable = ({ list, onClickItem }) => {
             <table>
                 <thead>
                     <tr>
-                        <th>Company Name</th>
-                        <th>Symbol</th>
-                        <th>Action Type</th>
+                        <th>
+                            <button className="sort-btn" type="button" onClick={() => setSortConfig({key: 'v_corporate_actions.company_full_name', isAsc: !sortConfig.isAsc})}>
+                                <span>Company Name</span>
+                                <i className="fa fa-sort"></i>
+                            </button>
+                        </th>
+                        <th>
+                            Symbol
+                        </th>
+                        <th>
+                            <button className="sort-btn" type="button" onClick={() => setSortConfig({key: 'v_corporate_actions.action_type', isAsc: !sortConfig.isAsc})}>
+                                <span>Action Type</span>
+                                <i className="fa fa-sort"></i>
+                            </button>
+                        </th>
                         <th>Action Description</th>
                         <th>Action Date</th>
-                        <th>Industry</th>
+                        <th>
+                            <button className="sort-btn" type="button" onClick={() => setSortConfig({key: 'v_corporate_actions.industry_group_en', isAsc: !sortConfig.isAsc})}>
+                                <span>Industry</span>
+                                <i className="fa fa-sort"></i>
+                            </button>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    {list.map((listItem, idx) => (
+                    {sortableItems.map((listItem, idx) => (
                         <tr className='single-event' key={idx} onClick={() => onRowClick(listItem)}>
                             <td>{
                                 listItem['v_corporate_actions.company_full_name'] ? listItem['v_corporate_actions.company_full_name'] : '-'
