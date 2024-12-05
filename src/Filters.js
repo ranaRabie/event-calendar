@@ -22,6 +22,8 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
     const symbolRef = useRef();
     const industry_group_enRef = useRef();
     const actionTypeRef = useRef();
+    const companyShortRef = useRef();
+    const isinRef = useRef();
 
     const [isCompanySelected, setIsCompanySelected] = useState(false);
     const [isSymbolSelected, setIsSymbolSelected] = useState(false);
@@ -64,7 +66,9 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                     company_full_name: [...new Set(filterDummy.filter(event => event['v_ca_filters.company_full_name'] !== null).map(event => event['v_ca_filters.company_full_name']))],
                     symbol: [...new Set(filterDummy.filter(event => event['v_ca_filters.symbol'] !== null).map(event => event['v_ca_filters.symbol']))],
                     industry_group_en: [...new Set(filterDummy.filter(event => event['v_ca_filters.industry_group_en'] !== null).map(event => event['v_ca_filters.industry_group_en']))],
-                    actionType: [...new Set(filterDummy.filter(event => event['v_ca_filters.action_type'] !== null).map(event => event['v_ca_filters.action_type']))]
+                    actionType: [...new Set(filterDummy.filter(event => event['v_ca_filters.action_type'] !== null).map(event => event['v_ca_filters.action_type']))],
+                    company_short_name: [...new Set(filterDummy.filter(event => event['v_ca_filters.company_short_name'] !== null).map(event => event['v_ca_filters.company_short_name']))],
+                    isin: [...new Set(filterDummy.filter(event => event['v_ca_filters.isin'] !== null).map(event => event['v_ca_filters.isin']))]
                 }
 
                 setFilterData(filterDataArr);
@@ -85,7 +89,9 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
             'industry_group_en': industry_group_enRef.current.value !== 'all' && industry_group_enRef.current.value,
             'actionType': actionTypeRef.current.value !== 'all' && actionTypeRef.current.value,
             'startDate': `${moment(startDate).format("YYYY/MM/DD")}`,
-            'endDate': `${moment(endDate).format("YYYY/MM/DD")}`
+            'endDate': `${moment(endDate).format("YYYY/MM/DD")}`,
+            'company_short_name': companyShortRef.current.value !== 'all' && companyShortRef.current.value,
+            'isin': isinRef.current.value !== 'all' && isinRef.current.value
         }
 
         handleFilterChange(selectedFilters);
@@ -97,6 +103,8 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
         symbolRef.current.value = 'all';
         industry_group_enRef.current.value = 'all';
         actionTypeRef.current.value = 'all';
+        companyShortRef.current.value = 'all';
+        isinRef.current.value = 'all';
 
         const currentDateRange = [new Date(startDateRange), new Date(endDateRange)]
 
@@ -139,6 +147,13 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                     </select>
                 </div>
                 <div>
+                    <label>Company Short Name</label>
+                    <select ref={companyShortRef}>
+                        <option value="all">all</option>
+                        {filterData && filterData.company_short_name.map((company, idx) => <option value={company} key={idx}>{company}</option>)}
+                    </select>
+                </div>
+                <div>
                     <label>Symbol</label>
                     <select ref={symbolRef} onChange={handleSymbolChange} disabled={isCompanySelected}>
                         <option value="all">all</option>
@@ -157,6 +172,13 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                     <select ref={actionTypeRef}>
                         <option value="all">all</option>
                         {filterData && filterData.actionType.map((action, idx) => <option value={action} key={idx}>{action}</option>)}
+                    </select>
+                </div>
+                <div>
+                    <label>ISIN</label>
+                    <select ref={isinRef}>
+                        <option value="all">all</option>
+                        {filterData && filterData.isin.map((item, idx) => <option value={item} key={idx}>{item}</option>)}
                     </select>
                 </div>
                 <div className="date-picker-wrapper">

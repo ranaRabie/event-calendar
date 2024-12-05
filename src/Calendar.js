@@ -26,9 +26,11 @@ export const CustomCalendar = () => {
         
         fetchData({
             "company_full_name": false,
+            "company_short_name": false,
             "symbol": false,
             "industry_group_en": false,
             "actionType": false,
+            "isin": false,
             "startDate": filterDates.startDate,
             "endDate": filterDates.endDate
         });
@@ -44,6 +46,10 @@ export const CustomCalendar = () => {
         // eslint-disable-next-line
         filters.company_full_name ? 
             currentFilters["v_corporate_actions.company_full_name"] = filters.company_full_name : '';
+        
+        // eslint-disable-next-line
+        filters.company_short_name ? 
+            currentFilters["v_corporate_actions.company_short_name"] = filters.company_short_name : '';
 
         // eslint-disable-next-line
         filters.symbol ? 
@@ -60,6 +66,10 @@ export const CustomCalendar = () => {
         // eslint-disable-next-line
         filters.startDate && filters.endDate ? 
             currentFilters["v_corporate_actions.action_date"] = `${filters.startDate} to ${filters.endDate}` : '';
+
+        // eslint-disable-next-line
+        filters.isin ? 
+            currentFilters["v_corporate_actions.isin"] = `${filters.isin}` : '';
 
 
         try {
