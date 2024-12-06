@@ -182,88 +182,75 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
     return (
         <>
             {error && <div className='error'>{error}</div>}
-            
             <form className="filters">
                 <div>
                     <label>Company Name</label>
-                    {filterData && 
                         <Select 
                             className="react-select-container"
                             classNamePrefix="react-select"
-                            options={filterData.company_full_name} 
+                            options={filterData && filterData.company_full_name} 
                             onChange={(e) => handleSelectChange(e, 'company')}
                             isDisabled={isSymbolSelected}
                             isClearable
                             value={company}
                         />
-                    }
                 </div>
                 <div>
                     <label>Company Short Name</label>
-                    {filterData && 
                         <Select 
                             className="react-select-container"
                             classNamePrefix="react-select"
-                            options={filterData.company_short_name} 
+                            options={filterData && filterData.company_short_name} 
                             onChange={(e) => handleSelectChange(e, 'companyShortName')}
                             isClearable
                             value={companyShort}
                         />
-                    }
                 </div>
                 <div>
-                    <label>Symbol</label>
-                    {filterData && 
+                    <label>Symbol</label> 
                         <Select 
                             className="react-select-container"
                             classNamePrefix="react-select"
-                            options={filterData.symbol} 
+                            options={filterData && filterData.symbol} 
                             onChange={(e) => handleSelectChange(e, 'symbol')}
                             isDisabled={isCompanySelected}
                             isClearable
                             value={symbol}
                         />
-                    }
                 </div>
                 <div>
                     <label>Industry</label>
-                    {filterData && 
                         <Select 
                             className="react-select-container"
                             classNamePrefix="react-select"
-                            options={filterData.industry_group_en} 
+                            options={filterData && filterData.industry_group_en} 
                             onChange={(e) => handleSelectChange(e, 'industry')}
                             isDisabled={isCompanySelected}
                             isClearable
                             value={industry}
                         />
-                    }
                 </div>
                 <div>
                     <label>Action Type</label>
-                    {filterData && 
                         <Select 
                             className="react-select-container"
                             classNamePrefix="react-select"
-                            options={filterData.actionType} 
+                            options={filterData && filterData.actionType} 
                             onChange={(e) => handleSelectChange(e, 'actionType')}
                             isClearable
                             value={actionType}
                         />
-                    }
                 </div>
                 <div>
-                    <label>ISIN</label>
-                    {filterData && 
+                    <label>ISIN</label> 
                         <Select 
                             className="react-select-container"
                             classNamePrefix="react-select"
-                            options={filterData.isin} 
+                            options={filterData && filterData.isin} 
                             onChange={(e) => handleSelectChange(e, 'isin')}
                             isClearable   
                             value={isin}                     
                         />
-                    }
                 </div>
                 <div className="date-picker-wrapper">
                     <label>Date Range</label>
