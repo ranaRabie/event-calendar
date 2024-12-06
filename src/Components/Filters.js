@@ -75,29 +75,42 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
 
     const RemoveDataDuplicatesAndNulls = (data) => {
         const filterDataArr = {
-            company_full_name: [{"label": "all", "value": "all"}, ...new Set(data.filter(event => event['v_looker_corporate_actions_filters.company_full_name'] !== null).map(event => {
-                return {"label": event['v_looker_corporate_actions_filters.company_full_name'], "value": event['v_looker_corporate_actions_filters.company_full_name']}
-            }))],
-
-            symbol: [{"label": "all", "value": "all"}, ...new Set(data.filter(event => event['v_looker_corporate_actions_filters.symbol'] !== null).map(event =>  {
-                return {"label": event['v_looker_corporate_actions_filters.symbol'], "value": event['v_looker_corporate_actions_filters.symbol']}
-            }))],
-
-            industry_group_en: [{"label": "all", "value": "all"}, ...new Set(data.filter(event => event['v_looker_corporate_actions_filters.industry_group_en'] !== null).map(event => {
-                return {"label": event['v_looker_corporate_actions_filters.industry_group_en'], "value": event['v_looker_corporate_actions_filters.industry_group_en']}
-            }))],
-
-            actionType: [{"label": "all", "value": "all"}, ...new Set(data.filter(event => event['v_looker_corporate_actions_filters.action_type'] !== null).map(event => {
-                return {"label": event['v_looker_corporate_actions_filters.action_type'], "value": event['v_looker_corporate_actions_filters.action_type']}
-            }))],
-
-            company_short_name: [{"label": "all", "value": "all"}, ...new Set(data.filter(event => event['v_looker_corporate_actions_filters.company_short_name'] !== null).map(event => {
-                return {"label": event['v_looker_corporate_actions_filters.company_short_name'], "value": event['v_looker_corporate_actions_filters.company_short_name']}
-            }))],
-
-            isin: [{"label": "all", "value": "all"}, ...new Set(data.filter(event => event['v_looker_corporate_actions_filters.isin'] !== null).map(event => {
-                return {"label": event['v_looker_corporate_actions_filters.isin'], "value": event['v_looker_corporate_actions_filters.isin']}
-            }))]
+            company_full_name: [{"label": "all", "value": "all"}, 
+                ...[...new Set(data
+                    .filter(event => event['v_looker_corporate_actions_filters.company_full_name'] !== null)
+                    .map(event => event['v_looker_corporate_actions_filters.company_full_name']))]
+                    .map(item => ({"label": item, "value": item}))
+            ],
+            symbol: [{"label": "all", "value": "all"}, 
+                ...[...new Set(data
+                    .filter(event => event['v_looker_corporate_actions_filters.symbol'] !== null)
+                    .map(event => event['v_looker_corporate_actions_filters.symbol']))]
+                    .map(item => ({"label": item, "value": item}))
+            ],
+            industry_group_en: [{"label": "all", "value": "all"}, 
+                ...[...new Set(data
+                    .filter(event => event['v_looker_corporate_actions_filters.industry_group_en'] !== null)
+                    .map(event => event['v_looker_corporate_actions_filters.industry_group_en']))]
+                    .map(item => ({"label": item, "value": item}))
+            ],
+            actionType: [{"label": "all", "value": "all"}, 
+                ...[...new Set(data
+                    .filter(event => event['v_looker_corporate_actions_filters.action_type'] !== null)
+                    .map(event => event['v_looker_corporate_actions_filters.action_type']))]
+                    .map(item => ({"label": item, "value": item}))
+            ],
+            company_short_name: [{"label": "all", "value": "all"}, 
+                ...[...new Set(data
+                    .filter(event => event['v_looker_corporate_actions_filters.company_short_name'] !== null)
+                    .map(event => event['v_looker_corporate_actions_filters.company_short_name']))]
+                    .map(item => ({"label": item, "value": item}))
+            ],
+            isin: [{"label": "all", "value": "all"}, 
+                ...[...new Set(data
+                    .filter(event => event['v_looker_corporate_actions_filters.isin'] !== null)
+                    .map(event => event['v_looker_corporate_actions_filters.isin']))]
+                    .map(item => ({"label": item, "value": item}))
+            ],
         }
 
         setFilterData(filterDataArr);
@@ -185,11 +198,6 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             onChange={(e) => handleSelectChange(e, 'company')}
                             isDisabled={isSymbolSelected}
                             defaultValue={filterData.company_full_name[0]}
-                            value={
-                                {
-                                  label: companyRef.current,
-                                  value: companyRef.current,
-                            }}
                         />
                     }
                 </div>
@@ -202,11 +210,6 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             options={filterData.company_short_name} 
                             onChange={(e) => handleSelectChange(e, 'companyShortName')}
                             defaultValue={filterData.company_short_name[0]}
-                            value={
-                                {
-                                  label: companyShortRef.current,
-                                  value: companyShortRef.current,
-                            }}
                         />
                     }
                 </div>
@@ -216,15 +219,10 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                         <Select 
                             className="react-select-container"
                             classNamePrefix="react-select"
-                            options={filterData.company_short_name} 
+                            options={filterData.symbol} 
                             onChange={(e) => handleSelectChange(e, 'symbol')}
                             defaultValue={filterData.symbol[0]}
                             isDisabled={isCompanySelected}
-                            value={
-                                {
-                                  label: symbolRef.current,
-                                  value: symbolRef.current,
-                            }}
                         />
                     }
                 </div>
@@ -238,11 +236,6 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             onChange={(e) => handleSelectChange(e, 'industry')}
                             defaultValue={filterData.industry_group_en[0]}
                             isDisabled={isCompanySelected}
-                            value={
-                                {
-                                  label: industry_group_enRef.current,
-                                  value: industry_group_enRef.current,
-                            }}
                         />
                     }
                 </div>
@@ -255,11 +248,6 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             options={filterData.actionType} 
                             onChange={(e) => handleSelectChange(e, 'actionType')}
                             defaultValue={filterData.actionType[0]}
-                            value={
-                                {
-                                  label: actionTypeRef.current,
-                                  value: actionTypeRef.current,
-                            }}
                         />
                     }
                 </div>
@@ -272,11 +260,6 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             options={filterData.isin} 
                             onChange={(e) => handleSelectChange(e, 'isin')}
                             defaultValue={filterData.isin[0]}
-                            value={
-                                {
-                                  label: isinRef.current,
-                                  value: isinRef.current,
-                            }}
                         />
                     }
                 </div>
