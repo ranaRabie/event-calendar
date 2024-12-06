@@ -19,12 +19,12 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
     const [startDate, endDate] = dateRange;
     const [error, setError] = useState(null);
 
-    const companyRef = useRef("all");
-    const symbolRef = useRef("all");
-    const industry_group_enRef = useRef("all");
-    const actionTypeRef = useRef("all");
-    const companyShortRef = useRef("all");
-    const isinRef = useRef("all");
+    const [company, setCompany] = useState(null);
+    const [companyShort, setCompanyShort] = useState(null);
+    const [symbol, setSymbol] = useState(null);
+    const [industry, setIndustry] = useState(null);
+    const [actionType, setActionType] = useState(null);
+    const [isin, setIsin] = useState(null);
 
     const [isCompanySelected, setIsCompanySelected] = useState(false);
     const [isSymbolSelected, setIsSymbolSelected] = useState(false);
@@ -75,38 +75,32 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
 
     const RemoveDataDuplicatesAndNulls = (data) => {
         const filterDataArr = {
-            company_full_name: [{"label": "all", "value": "all"}, 
-                ...[...new Set(data
+            company_full_name: [...[...new Set(data
                     .filter(event => event['v_looker_corporate_actions_filters.company_full_name'] !== null)
                     .map(event => event['v_looker_corporate_actions_filters.company_full_name']))]
                     .map(item => ({"label": item, "value": item}))
             ],
-            symbol: [{"label": "all", "value": "all"}, 
-                ...[...new Set(data
+            symbol: [...[...new Set(data
                     .filter(event => event['v_looker_corporate_actions_filters.symbol'] !== null)
                     .map(event => event['v_looker_corporate_actions_filters.symbol']))]
                     .map(item => ({"label": item, "value": item}))
             ],
-            industry_group_en: [{"label": "all", "value": "all"}, 
-                ...[...new Set(data
+            industry_group_en: [...[...new Set(data
                     .filter(event => event['v_looker_corporate_actions_filters.industry_group_en'] !== null)
                     .map(event => event['v_looker_corporate_actions_filters.industry_group_en']))]
                     .map(item => ({"label": item, "value": item}))
             ],
-            actionType: [{"label": "all", "value": "all"}, 
-                ...[...new Set(data
+            actionType: [...[...new Set(data
                     .filter(event => event['v_looker_corporate_actions_filters.action_type'] !== null)
                     .map(event => event['v_looker_corporate_actions_filters.action_type']))]
                     .map(item => ({"label": item, "value": item}))
             ],
-            company_short_name: [{"label": "all", "value": "all"}, 
-                ...[...new Set(data
+            company_short_name: [...[...new Set(data
                     .filter(event => event['v_looker_corporate_actions_filters.company_short_name'] !== null)
                     .map(event => event['v_looker_corporate_actions_filters.company_short_name']))]
                     .map(item => ({"label": item, "value": item}))
             ],
-            isin: [{"label": "all", "value": "all"}, 
-                ...[...new Set(data
+            isin: [...[...new Set(data
                     .filter(event => event['v_looker_corporate_actions_filters.isin'] !== null)
                     .map(event => event['v_looker_corporate_actions_filters.isin']))]
                     .map(item => ({"label": item, "value": item}))
@@ -120,27 +114,29 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
         e.preventDefault();
 
         const selectedFilters = {
-            'company_full_name': companyRef.current !== 'all' && companyRef.current,
-            'symbol': symbolRef.current !== 'all' && symbolRef.current,
-            'industry_group_en': industry_group_enRef.current !== 'all' && industry_group_enRef.current,
-            'actionType': actionTypeRef.current !== 'all' && actionTypeRef.current,
+            'company_full_name': company !== null && company.value,
+            'symbol': symbol !== null && symbol.value,
+            'industry_group_en': industry !== null && industry.value,
+            'actionType': actionType !== null && actionType.value,
+            'company_short_name': companyShort !== null && companyShort.value,
+            'isin': isin !== null && isin.value,
             'startDate': `${moment(startDate).format("YYYY/MM/DD")}`,
             'endDate': `${moment(endDate).format("YYYY/MM/DD")}`,
-            'company_short_name': companyShortRef.current !== 'all' && companyShortRef.current,
-            'isin': isinRef.current !== 'all' && isinRef.current
         }
 
+        console.log(selectedFilters);
         handleFilterChange(selectedFilters);
     }
 
     const clearFilters = (e) => {
         e.preventDefault();
-        companyRef.current = 'all';
-        symbolRef.current = 'all';
-        industry_group_enRef.current = 'all';
-        actionTypeRef.current = 'all';
-        companyShortRef.current = 'all';
-        isinRef.current = 'all';
+      
+        setCompany(null);
+        setCompanyShort(null);
+        setIndustry(null);
+        setActionType(null);
+        setSymbol(null);
+        setIsin(null);
 
         const currentDateRange = [new Date(startDateRange), new Date(endDateRange)]
 
@@ -152,25 +148,25 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
         updateFilters(e, currentDateRange[0], currentDateRange[1]);
     }
 
-    const handleSelectChange = (e, field) => {
+    const handleSelectChange = (option, field) => {
         if (field === 'company') {
-            setIsCompanySelected(e.value !== "all");
+            setIsCompanySelected(option !== null);
             setIsSymbolSelected(false);
 
-            companyRef.current = e.value;
+            setCompany(option);
         } else if (field === 'symbol') {
-            setIsSymbolSelected(e.value !== "all");
+            setIsSymbolSelected(option !== null);
             setIsCompanySelected(false);
 
-            symbolRef.current = e.value;
+            setSymbol(option);
         } else if (field === 'industry') {
-            industry_group_enRef.current = e.value;
+           setIndustry(option);
         } else if (field === 'actionType') {
-            actionTypeRef.current = e.value;
+            setActionType(option);
         } else if (field === 'companyShortName') {
-            companyShortRef.current = e.value;
+            setCompanyShort(option);
         } else if (field === 'isin') {
-            isinRef.current = e.value;
+            setIsin(option);
         }
     };
 
@@ -197,7 +193,8 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             options={filterData.company_full_name} 
                             onChange={(e) => handleSelectChange(e, 'company')}
                             isDisabled={isSymbolSelected}
-                            defaultValue={filterData.company_full_name[0]}
+                            isClearable
+                            value={company}
                         />
                     }
                 </div>
@@ -209,7 +206,8 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData.company_short_name} 
                             onChange={(e) => handleSelectChange(e, 'companyShortName')}
-                            defaultValue={filterData.company_short_name[0]}
+                            isClearable
+                            value={companyShort}
                         />
                     }
                 </div>
@@ -221,8 +219,9 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData.symbol} 
                             onChange={(e) => handleSelectChange(e, 'symbol')}
-                            defaultValue={filterData.symbol[0]}
                             isDisabled={isCompanySelected}
+                            isClearable
+                            value={symbol}
                         />
                     }
                 </div>
@@ -234,8 +233,9 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData.industry_group_en} 
                             onChange={(e) => handleSelectChange(e, 'industry')}
-                            defaultValue={filterData.industry_group_en[0]}
                             isDisabled={isCompanySelected}
+                            isClearable
+                            value={industry}
                         />
                     }
                 </div>
@@ -247,7 +247,8 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData.actionType} 
                             onChange={(e) => handleSelectChange(e, 'actionType')}
-                            defaultValue={filterData.actionType[0]}
+                            isClearable
+                            value={actionType}
                         />
                     }
                 </div>
@@ -259,7 +260,8 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData.isin} 
                             onChange={(e) => handleSelectChange(e, 'isin')}
-                            defaultValue={filterData.isin[0]}
+                            isClearable   
+                            value={isin}                     
                         />
                     }
                 </div>
