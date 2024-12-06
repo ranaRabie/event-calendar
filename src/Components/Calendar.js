@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import moment from 'moment';
 import { ExtensionContext } from '@looker/extension-sdk-react';
 import { Filters } from './Filters';
-import eventsDummy from './data.json';
+import eventsDummy from '../Data/data.json';
 import { EventsTable } from './EventsTable';
 import { DividendTable } from './DividendTable';
 import { GeneralAssemblyMeetingTable } from './GeneralAssemblyMeetingTable';

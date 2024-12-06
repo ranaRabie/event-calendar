@@ -3,7 +3,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 // import { ExtensionContext } from '@looker/extension-sdk-react';
-import filterDummy from './filters.json'
+import filterDummy from '../Data/filters.json'
 import Select from 'react-select';
 
 export const Filters = forwardRef(({handleFilterChange}, ref) => {

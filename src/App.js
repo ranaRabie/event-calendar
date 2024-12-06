@@ -1,7 +1,7 @@
 import React from 'react';
 import 'react-calendar/dist/Calendar.css'; // Import default styles
 import './index.css';
-import { CustomCalendar } from './Calendar';
+import { CustomCalendar } from './Components/Calendar';
 
 function App() {
   return (
