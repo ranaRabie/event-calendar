@@ -4,11 +4,11 @@ import moment from 'moment';
 import { ExtensionContext } from '@looker/extension-sdk-react';
 import { Filters } from './Filters';
 import eventsDummy from '../Data/data.json';
-import { EventsTable } from './EventsTable';
-import { DividendTable } from './DividendTable';
-import { GeneralAssemblyMeetingTable } from './GeneralAssemblyMeetingTable';
-import { BoardOfDirectorsSessionTable } from './BoardOfDirectorsSessionTable';
-import { AnnouncementTable } from './AnnouncementTable';
+import { EventsTable } from './Tables/EventsTable';
+import { DividendTable } from './Tables/DividendTable';
+import { GeneralAssemblyMeetingTable } from './Tables/GeneralAssemblyMeetingTable';
+import { BoardOfDirectorsSessionTable } from './Tables/BoardOfDirectorsSessionTable';
+import { AnnouncementTable } from './Tables/AnnouncementTable';
 
 export const CustomCalendar = () => {
     // const extensionContext = useContext(ExtensionContext);
