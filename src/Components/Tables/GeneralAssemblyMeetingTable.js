@@ -11,6 +11,7 @@ export const GeneralAssemblyMeetingTable = ({ listItem }) => {
                         <th>AGM Date</th>
                         <th>Holding Site</th>
                         <th>Status</th>
+                        <th>Type of Assembly</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,6 +27,9 @@ export const GeneralAssemblyMeetingTable = ({ listItem }) => {
                         }</td>
                         <td>{
                             listItem['v_corporate_actions.gam_status'] ? listItem['v_corporate_actions.gam_status'] : '-'
+                        }</td>
+                        <td>{
+                            listItem['v_corporate_actions.gam_type_of_assembly'] ? listItem['v_corporate_actions.gam_type_of_assembly'] : '-'
                         }</td>
                     </tr>
                 </tbody>

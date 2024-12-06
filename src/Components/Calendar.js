@@ -202,7 +202,7 @@ export const CustomCalendar = () => {
                             }
 
                             {
-                                selectedItem && selectedItem['v_corporate_actions.action_type'] === 'General Assembly Meeting' ?
+                                selectedItem && selectedItem['v_corporate_actions.action_type'] === '(AGM) General Assembly' ?
                                     <GeneralAssemblyMeetingTable listItem={selectedItem}></GeneralAssemblyMeetingTable> : ''
                             }
 

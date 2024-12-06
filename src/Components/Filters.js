@@ -115,7 +115,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
 
         const selectedFilters = {
             'company_full_name': company !== null && company.value,
-            'symbol': symbol !== null && symbol.value,
+            'symbol': symbol !== null && symbol.value.toString(),
             'industry_group_en': industry !== null && industry.value,
             'actionType': actionType !== null && actionType.value,
             'company_short_name': companyShort !== null && companyShort.value,
