@@ -65,7 +65,7 @@ code {
 
 .highlight:before {
   content: '';
-  background-color: rgb(0, 140, 255);
+  background-color: rgb(0, 69, 277);
   border-radius: 50%;
   position: absolute;
   bottom: 3px;
@@ -93,7 +93,7 @@ code {
 .react-calendar__tile--active:before {
   content: '';
   background-color: transparent;
-  border: 2px solid rgb(0, 140, 255) !important;
+  border: 2px solid rgb(0, 69, 277, 1) !important;
   border-radius: 50%;
   position: absolute;
   top: 50%;
@@ -111,11 +111,11 @@ code {
 .react-calendar__tile--hasActive,
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
-  background: rgba(0, 140, 255, 0.5);
+  background: rgba(0, 69, 277, 1);
 }
 
 .react-calendar__tile--now {
-  background: rgba(0, 140, 255, 0.2) !important;
+  background: rgb(0, 69, 277, 0.3) !important;
 }
 
 .react-calendar__tile--now.react-calendar__tile--active {
@@ -158,7 +158,7 @@ table th button.sort-btn i {
 .events-list h3 {
   margin-bottom: 0;
   margin-top: 0;
-  background-color: #0000ff;
+  background-color: rgba(0, 69, 277, 1);
   color: #fff;
   text-align: center;
   font-size: 0.9rem;
@@ -208,7 +208,7 @@ table th button.sort-btn i {
 }
 
 .filters .submit-filters, .filters .clear-filters {
-  background-color: rgb(0, 140, 255);
+  background-color: rgb(0, 69, 277);
   border: 1px solid #fff;
   outline: none;
   margin: 0.3rem 1rem;
@@ -263,7 +263,7 @@ table th button.sort-btn i {
 }
 
 .loader {
-  width: 320px;
+  width: 700px;
   margin: 0 auto;
   border-radius: 10px;
   position: relative;
@@ -277,7 +277,7 @@ table th button.sort-btn i {
   right: 100%;
   bottom: 0;
   left: 0;
-  background: rgb(0, 140, 255);
+  background: rgb(0, 69, 277);
   width: 0;
   animation: borealisBar 2s linear infinite;
 }

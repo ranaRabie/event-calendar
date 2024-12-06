@@ -136,8 +136,6 @@ export const CustomCalendar = () => {
         const lastDateOfMonth = (date = new Date()) =>
             new Date(date.getFullYear(), date.getMonth() + 2, 0);
 
-        console.log(firstDateOfMonth(currentDate), lastDateOfMonth(currentDate));
-
         return { firstDateOfMonth: firstDateOfMonth(currentDate), lastDateOfMonth: lastDateOfMonth(currentDate) };
     }
 
