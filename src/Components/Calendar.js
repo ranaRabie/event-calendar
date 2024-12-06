@@ -9,6 +9,8 @@ import { DividendTable } from './Tables/DividendTable';
 import { GeneralAssemblyMeetingTable } from './Tables/GeneralAssemblyMeetingTable';
 import { BoardOfDirectorsSessionTable } from './Tables/BoardOfDirectorsSessionTable';
 import { AnnouncementTable } from './Tables/AnnouncementTable';
+import { IPOTable } from './Tables/IPOTable';
+import { OtherTable } from './Tables/OtherTable';
 
 export const CustomCalendar = () => {
     // const extensionContext = useContext(ExtensionContext);
@@ -148,14 +150,7 @@ export const CustomCalendar = () => {
     };
 
     const handleRowClick = (listItem) => {
-        if (
-          listItem["v_corporate_actions.action_type"] === "Dividend" ||
-          listItem["v_corporate_actions.entry_type"] === "Announcement" ||
-          listItem["v_corporate_actions.action_type"] === "Board of Directors Session" ||
-          listItem["v_corporate_actions.action_type"] === "General Assembly Meeting"
-        ) {
-          setSelectedItem(listItem);
-        }
+        setSelectedItem(listItem);
     };
 
     return (
@@ -204,6 +199,21 @@ export const CustomCalendar = () => {
                             {
                                 selectedItem && selectedItem['v_corporate_actions.action_type'] === '(AGM) General Assembly' ?
                                     <GeneralAssemblyMeetingTable listItem={selectedItem}></GeneralAssemblyMeetingTable> : ''
+                            }
+                            
+                            {
+                                selectedItem && selectedItem['v_corporate_actions.action_type'] === 'IPO' ?
+                                    <IPOTable listItem={selectedItem}></IPOTable> : ''
+                            }
+
+                            {
+                                selectedItem && 
+                                selectedItem['v_corporate_actions.action_type'] !== 'Dividend' && 
+                                selectedItem['v_corporate_actions.action_type'] !== 'Board of Directors Session' && 
+                                selectedItem['v_corporate_actions.action_type'] !== '(AGM) General Assembly' &&
+                                selectedItem['v_corporate_actions.action_type'] !== 'IPO' &&
+                                selectedItem && selectedItem['v_corporate_actions.entry_type'] === 'Announcement' ?
+                                    <OtherTable listItem={selectedItem}></OtherTable> : ''
                             }
 
                             {

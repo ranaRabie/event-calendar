@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 export const EventsTable = ({ list, onClickItem }) => {
     const [sortConfig, setSortConfig] = useState({
@@ -20,7 +20,6 @@ export const EventsTable = ({ list, onClickItem }) => {
         }
     }
     
-
     const onRowClick = (listItem) => {
         onClickItem(listItem);
     }
@@ -30,24 +29,32 @@ export const EventsTable = ({ list, onClickItem }) => {
             <h3>Standard</h3>
             <table>
                 <thead>
-                    <tr>
+                <tr>
                         <th>
                             <button className="sort-btn" type="button" onClick={() => setSortConfig({key: 'v_corporate_actions.company_full_name', isAsc: !sortConfig.isAsc})}>
-                                <span>Company Name</span>
+                                <span>Company Full Name</span>
+                                <i className="fa fa-sort"></i>
+                            </button>
+                        </th>
+                        <th>
+                            <button className="sort-btn" type="button" onClick={() => setSortConfig({key: 'v_corporate_actions.company_short_name', isAsc: !sortConfig.isAsc})}>
+                                <span>Company Short Name</span>
                                 <i className="fa fa-sort"></i>
                             </button>
                         </th>
                         <th>
                             Symbol
                         </th>
+                        <th>Isin</th>
+                        <th>Action Date</th>
+                        <th>Entry Type</th>
                         <th>
                             <button className="sort-btn" type="button" onClick={() => setSortConfig({key: 'v_corporate_actions.action_type', isAsc: !sortConfig.isAsc})}>
                                 <span>Action Type</span>
                                 <i className="fa fa-sort"></i>
                             </button>
                         </th>
-                        <th>Action Description</th>
-                        <th>Action Date</th>
+                        <th>Action Description</th>                      
                         <th>
                             <button className="sort-btn" type="button" onClick={() => setSortConfig({key: 'v_corporate_actions.industry_group_en', isAsc: !sortConfig.isAsc})}>
                                 <span>Industry</span>
@@ -63,7 +70,19 @@ export const EventsTable = ({ list, onClickItem }) => {
                                 listItem['v_corporate_actions.company_full_name'] ? listItem['v_corporate_actions.company_full_name'] : '-'
                             }</td>
                             <td>{
+                                listItem['v_corporate_actions.company_short_name'] ? listItem['v_corporate_actions.company_short_name'] : '-'
+                            }</td>
+                            <td>{
                                 listItem['v_corporate_actions.symbol'] ? listItem['v_corporate_actions.symbol'] : '-'
+                            }</td>
+                            <td>{
+                                listItem['v_corporate_actions.industry_group_en'] ? listItem['v_corporate_actions.industry_group_en'] : '-'
+                            }</td>
+                            <td>{
+                                listItem['v_corporate_actions.action_date'] ? listItem['v_corporate_actions.action_date'] : '-'
+                            }</td>
+                            <td>{
+                                listItem['v_corporate_actions.entry_type'] ? listItem['v_corporate_actions.entry_type'] : '-'
                             }</td>
                             <td>{
                                 listItem['v_corporate_actions.action_type'] ? listItem['v_corporate_actions.action_type'] : '-'
@@ -72,10 +91,7 @@ export const EventsTable = ({ list, onClickItem }) => {
                                 listItem['v_corporate_actions.action_description'] ? listItem['v_corporate_actions.action_description'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions.action_date'] ? listItem['v_corporate_actions.action_date'] : '-'
-                            }</td>
-                            <td>{
-                                listItem['v_corporate_actions.industry_group_en'] ? listItem['v_corporate_actions.industry_group_en'] : '-'
+                                listItem['v_corporate_actions.isin'] ? listItem['v_corporate_actions.isin'] : '-'
                             }</td>
                         </tr>
                     ))}
