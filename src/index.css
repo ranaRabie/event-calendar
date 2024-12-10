@@ -46,12 +46,17 @@ code {
 }
 
 .calendar-wrapper {
-  flex: 0 0 30%;
+  flex: 0 0 100%;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .events-wrapper {
-  width: 100%;
-  margin-top: 1rem;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 1px 2px 10px rgba(0, 69, 227, 0.4);
+  padding: 1rem;
+  margin-bottom: 1rem;
 }
 
 .highlight {
@@ -65,18 +70,41 @@ code {
 
 .highlight:before {
   content: '';
-  background-color: rgb(0, 69, 277);
-  border-radius: 50%;
+  background-color: #336ae9;
   position: absolute;
-  bottom: 3px;
-  left: 50%;
-  margin-left: -3px;
-  width: 6px;
-  height: 6px;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.react-calendar--doubleView {
+  width: 100% !important;
+}
+
+.react-calendar {
+  border-radius: 7px;
+  border: 0 !important;
+  box-shadow: 1px 2px 10px rgba(0, 69, 227, 0.4);
+}
+
+.react-calendar__navigation button {
+  color: #001f33;
+}
+
+.react-calendar__navigation button.react-calendar__navigation__arrow {
+  color: #336ae9;
+  font-size: 1.5rem;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  color: #001f33;
+  background-color: #336ae9;
+  color: #fff;
 }
 
 .react-calendar__month-view__days__day--weekend {
-  color: inherit !important;
+  color: #001f33 !important;
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {
@@ -85,23 +113,15 @@ code {
 }
 
 .react-calendar__tile--active {
-  background: transparent !important;
-  color: inherit !important;
+  background: #336ae9 !important;
+  color: #fff !important;
   position: relative;
 }
 
-.react-calendar__tile--active:before {
-  content: '';
-  background-color: transparent;
-  border: 2px solid rgb(0, 69, 277, 1) !important;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -17.5px;
-  margin-left: -17.5px;
-  width: 35px;
-  height: 35px;
+.react-calendar__tile {
+  border: 1px solid #eee !important;
+  line-height: 20px !important;
+  color: #001f33;
 }
 
 .single-event {
@@ -111,11 +131,11 @@ code {
 .react-calendar__tile--hasActive,
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
-  background: rgba(0, 69, 277, 1);
+  background: #336ae9;
 }
 
 .react-calendar__tile--now {
-  background: rgb(0, 69, 277, 0.3) !important;
+  background: rgb(102, 143, 238, 0.15) !important;
 }
 
 .react-calendar__tile--now.react-calendar__tile--active {
@@ -125,15 +145,24 @@ code {
 table,
 td,
 th {
-  border: 1px solid;
+  border: 1px solid #c1c1c1;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
+  color: rgb(0, 31, 51, 0.73);
+  padding: 0.5rem;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border: 0;
   margin-bottom: 1rem;
+  border-spacing: 0px;
+}
+
+table th {
+  color: rgb(153, 181, 244);
+  font-weight: bold;
 }
 
 table th button.sort-btn {
@@ -147,6 +176,7 @@ table th button.sort-btn {
   font-weight: bold;
   font-family: inherit;
   font-size: inherit;
+  color: inherit;
 }
 
 table th button.sort-btn i {
@@ -156,14 +186,12 @@ table th button.sort-btn i {
 }
 
 .events-list h3 {
-  margin-bottom: 0;
+  margin-bottom: 0.3rem;
   margin-top: 0;
-  background-color: rgba(0, 69, 277, 1);
-  color: #fff;
-  text-align: center;
-  font-size: 0.9rem;
+  color: #001f33;
+  font-size: 1.1rem;
   padding: 0.25rem;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .filters {
@@ -178,6 +206,7 @@ table th button.sort-btn i {
   display: block;
   padding-left: 0.4rem;
   margin-top: 0.5rem;
+  color: #001f33;
 }
 
 .filters select {
@@ -198,7 +227,7 @@ table th button.sort-btn i {
 .react-select-container .react-select__control {
     max-height: 27px;
     min-height: auto;
-    border-color: rgb(118, 118, 118);
+    border-color: rgba(0, 31, 51, 0.35);
 }
 
 .react-select-container .react-select__value-container,
@@ -208,13 +237,14 @@ table th button.sort-btn i {
 }
 
 .filters .submit-filters, .filters .clear-filters {
-  background-color: rgb(0, 69, 277);
-  border: 1px solid #fff;
+  /* background-color: rgb(0, 69, 277); */
+  background-color: #fff;
+  border: 1px solid #336ae9;
   outline: none;
   margin: 0.3rem 1rem;
   height: 27px;
   text-transform: capitalize;
-  color: #fff;
+  color: rgb(26, 115, 232);
   width: 65px;
   border-radius: 3px;
   position: relative;
@@ -233,15 +263,15 @@ table th button.sort-btn i {
 .filter-result button {
     cursor: pointer;
     position: absolute;
-    top: -7px;
-    right: -7px;
+    top: 34px;
+    right: 2px;
     width: 20px;
     height: 20px;
     outline: none;
-    background-color: #e97a7a;
+    background-color: #cd0000;
     border: 0;
     border-radius: 50%;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     color: #fff;
     font-weight: bold;
     margin-bottom: 1rem;
@@ -260,6 +290,8 @@ table th button.sort-btn i {
   padding: 0.25rem;
   width: 230px;
   box-sizing: border-box;
+  border: 1px solid rgba(0, 31, 51, 0.35);
+  border-radius: 5px;
 }
 
 .loader {

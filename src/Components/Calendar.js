@@ -176,52 +176,50 @@ export const CustomCalendar = () => {
                 >
                 </Calendar>
             </div>
+            
+            {selectedEvents ? (
+                <div className='events-wrapper'>
+                    <EventsTable list={selectedEvents} onClickItem={handleRowClick}></EventsTable>
 
-            <div className='events-wrapper'>
-                {selectedEvents ? (
-                    <>
-                        <EventsTable list={selectedEvents} onClickItem={handleRowClick}></EventsTable>
+                    <div className='filter-result'>
+                        {selectedItem && <button onClick={handleClosePopup} className="close-button">X</button>}
+                        {
+                            selectedItem && selectedItem['v_corporate_actions.action_type'] === 'Dividend' ?
+                                <DividendTable listItem={selectedItem}></DividendTable> : ''
+                        }
+                        
+                        {
+                            selectedItem && selectedItem['v_corporate_actions.action_type'] === 'Board of Directors Session' ?
+                                <BoardOfDirectorsSessionTable listItem={selectedItem}></BoardOfDirectorsSessionTable> : ''
+                        }
 
-                        <div className='filter-result'>
-                            {selectedItem && <button onClick={handleClosePopup} className="close-button">X</button>}
-                            {
-                                selectedItem && selectedItem['v_corporate_actions.action_type'] === 'Dividend' ?
-                                    <DividendTable listItem={selectedItem}></DividendTable> : ''
-                            }
-                            
-                            {
-                                selectedItem && selectedItem['v_corporate_actions.action_type'] === 'Board of Directors Session' ?
-                                    <BoardOfDirectorsSessionTable listItem={selectedItem}></BoardOfDirectorsSessionTable> : ''
-                            }
+                        {
+                            selectedItem && selectedItem['v_corporate_actions.action_type'] === '(AGM) General Assembly' ?
+                                <GeneralAssemblyMeetingTable listItem={selectedItem}></GeneralAssemblyMeetingTable> : ''
+                        }
+                        
+                        {
+                            selectedItem && selectedItem['v_corporate_actions.action_type'] === 'IPO' ?
+                                <IPOTable listItem={selectedItem}></IPOTable> : ''
+                        }
 
-                            {
-                                selectedItem && selectedItem['v_corporate_actions.action_type'] === '(AGM) General Assembly' ?
-                                    <GeneralAssemblyMeetingTable listItem={selectedItem}></GeneralAssemblyMeetingTable> : ''
-                            }
-                            
-                            {
-                                selectedItem && selectedItem['v_corporate_actions.action_type'] === 'IPO' ?
-                                    <IPOTable listItem={selectedItem}></IPOTable> : ''
-                            }
+                        {
+                            selectedItem && selectedItem['v_corporate_actions.entry_type'] === 'Announcement' ?
+                                <AnnouncementTable listItem={selectedItem}></AnnouncementTable> : ''
+                        }
 
-                            {
-                                selectedItem && selectedItem['v_corporate_actions.entry_type'] === 'Announcement' ?
-                                    <AnnouncementTable listItem={selectedItem}></AnnouncementTable> : ''
-                            }
-
-                            {
-                                selectedItem && 
-                                selectedItem['v_corporate_actions.action_type'] !== 'Dividend' && 
-                                selectedItem['v_corporate_actions.action_type'] !== 'Board of Directors Session' && 
-                                selectedItem['v_corporate_actions.action_type'] !== '(AGM) General Assembly' &&
-                                selectedItem['v_corporate_actions.action_type'] !== 'IPO' &&
-                                selectedItem['v_corporate_actions.entry_type'] !== 'Announcement' ?
-                                    <OtherTable listItem={selectedItem}></OtherTable> : ''
-                            }
-                        </div>
-                    </>
-                ) : ''}
-            </div>
+                        {
+                            selectedItem && 
+                            selectedItem['v_corporate_actions.action_type'] !== 'Dividend' && 
+                            selectedItem['v_corporate_actions.action_type'] !== 'Board of Directors Session' && 
+                            selectedItem['v_corporate_actions.action_type'] !== '(AGM) General Assembly' &&
+                            selectedItem['v_corporate_actions.action_type'] !== 'IPO' &&
+                            selectedItem['v_corporate_actions.entry_type'] !== 'Announcement' ?
+                                <OtherTable listItem={selectedItem}></OtherTable> : ''
+                        }
+                    </div>
+                </div>
+            ) : ''}
         </div>
     );
 };
