@@ -27,6 +27,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
     const [isin, setIsin] = useState(null);
 
     const [isCompanySelected, setIsCompanySelected] = useState(false);
+    const [isCompanyShortSelected, setIsCompanyShortSelected] = useState(false);
     const [isSymbolSelected, setIsSymbolSelected] = useState(false);
     
     useEffect(() => {
@@ -152,11 +153,13 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
         if (field === 'company') {
             setIsCompanySelected(option !== null);
             setIsSymbolSelected(false);
+            setIsCompanyShortSelected(false);
 
             setCompany(option);
         } else if (field === 'symbol') {
             setIsSymbolSelected(option !== null);
             setIsCompanySelected(false);
+            setIsCompanyShortSelected(false);
 
             setSymbol(option);
         } else if (field === 'industry') {
@@ -164,6 +167,10 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
         } else if (field === 'actionType') {
             setActionType(option);
         } else if (field === 'companyShortName') {
+            setIsCompanyShortSelected(option !== null);
+            setIsCompanySelected(false);
+            setIsSymbolSelected(false);
+
             setCompanyShort(option);
         } else if (field === 'isin') {
             setIsin(option);
@@ -184,13 +191,13 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
             {error && <div className='error'>{error}</div>}
             <form className="filters">
                 <div>
-                    <label>Company Full Name</label>
+                        <label>Company Full Name</label>
                         <Select 
                             className="react-select-container"
                             classNamePrefix="react-select"
                             options={filterData && filterData.company_full_name} 
                             onChange={(e) => handleSelectChange(e, 'company')}
-                            isDisabled={isSymbolSelected}
+                            isDisabled={isSymbolSelected || isCompanyShortSelected}
                             isClearable
                             value={company}
                         />
@@ -202,6 +209,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData && filterData.company_short_name} 
                             onChange={(e) => handleSelectChange(e, 'companyShortName')}
+                            isDisabled={isSymbolSelected || isCompanySelected}
                             isClearable
                             value={companyShort}
                         />
@@ -213,7 +221,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData && filterData.symbol} 
                             onChange={(e) => handleSelectChange(e, 'symbol')}
-                            isDisabled={isCompanySelected}
+                            isDisabled={isCompanySelected || isCompanyShortSelected}
                             isClearable
                             value={symbol}
                         />
@@ -225,7 +233,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData && filterData.industry_group_en} 
                             onChange={(e) => handleSelectChange(e, 'industry')}
-                            isDisabled={isCompanySelected}
+                            isDisabled={isCompanySelected || isCompanyShortSelected}
                             isClearable
                             value={industry}
                         />
