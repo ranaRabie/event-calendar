@@ -55,7 +55,7 @@ export const CustomCalendar = () => {
 
         // eslint-disable-next-line
         filters.symbol ? 
-            currentFilters["v_corporate_actions.symbol"] = filters.symbol : '';
+            currentFilters["v_corporate_actions.symbol"] = `${filters.symbol}` : '';
 
         // eslint-disable-next-line
         filters.industry_group_en ? 
@@ -63,7 +63,7 @@ export const CustomCalendar = () => {
 
         // eslint-disable-next-line
         filters.actionType ? 
-            currentFilters["v_corporate_actions.action-type"] = filters.actionType : '';
+            currentFilters["v_corporate_actions.action_type"] = filters.actionType : '';
 
         // eslint-disable-next-line
         filters.startDate && filters.endDate ? 
@@ -205,18 +205,18 @@ export const CustomCalendar = () => {
                             }
 
                             {
+                                selectedItem && selectedItem['v_corporate_actions.entry_type'] === 'Announcement' ?
+                                    <AnnouncementTable listItem={selectedItem}></AnnouncementTable> : ''
+                            }
+
+                            {
                                 selectedItem && 
                                 selectedItem['v_corporate_actions.action_type'] !== 'Dividend' && 
                                 selectedItem['v_corporate_actions.action_type'] !== 'Board of Directors Session' && 
                                 selectedItem['v_corporate_actions.action_type'] !== '(AGM) General Assembly' &&
                                 selectedItem['v_corporate_actions.action_type'] !== 'IPO' &&
-                                selectedItem && selectedItem['v_corporate_actions.entry_type'] === 'Announcement' ?
+                                selectedItem['v_corporate_actions.entry_type'] !== 'Announcement' ?
                                     <OtherTable listItem={selectedItem}></OtherTable> : ''
-                            }
-
-                            {
-                                selectedItem && selectedItem['v_corporate_actions.entry_type'] === 'Announcement' ?
-                                    <AnnouncementTable listItem={selectedItem}></AnnouncementTable> : ''
                             }
                         </div>
                     </>

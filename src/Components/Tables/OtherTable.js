@@ -3,7 +3,7 @@ import React from "react";
 export const OtherTable = ({ listItem }) => {
     return (
         <div className='events-list'>
-            <h3>IPO</h3>
+            <h3>Other Corporate Actions</h3>
             <table>
                 <thead>
                     <tr>

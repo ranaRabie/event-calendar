@@ -115,7 +115,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
 
         const selectedFilters = {
             'company_full_name': company !== null && company.value,
-            'symbol': symbol !== null && symbol.value.toString(),
+            'symbol': symbol !== null && symbol.value,
             'industry_group_en': industry !== null && industry.value,
             'actionType': actionType !== null && actionType.value,
             'company_short_name': companyShort !== null && companyShort.value,
@@ -184,7 +184,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
             {error && <div className='error'>{error}</div>}
             <form className="filters">
                 <div>
-                    <label>Company Name</label>
+                    <label>Company Full Name</label>
                         <Select 
                             className="react-select-container"
                             classNamePrefix="react-select"

@@ -76,7 +76,7 @@ export const EventsTable = ({ list, onClickItem }) => {
                                 listItem['v_corporate_actions.symbol'] ? listItem['v_corporate_actions.symbol'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions.industry_group_en'] ? listItem['v_corporate_actions.industry_group_en'] : '-'
+                                listItem['v_corporate_actions.isin'] ? listItem['v_corporate_actions.isin'] : '-'
                             }</td>
                             <td>{
                                 listItem['v_corporate_actions.action_date'] ? listItem['v_corporate_actions.action_date'] : '-'
@@ -91,7 +91,7 @@ export const EventsTable = ({ list, onClickItem }) => {
                                 listItem['v_corporate_actions.action_description'] ? listItem['v_corporate_actions.action_description'] : '-'
                             }</td>
                             <td>{
-                                listItem['v_corporate_actions.isin'] ? listItem['v_corporate_actions.isin'] : '-'
+                                listItem['v_corporate_actions.industry_group_en'] ? listItem['v_corporate_actions.industry_group_en'] : '-'
                             }</td>
                         </tr>
                     ))}
