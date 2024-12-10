@@ -295,7 +295,7 @@ table th button.sort-btn i {
 }
 
 .loader {
-  width: 700px;
+  width: 100%;
   margin: 0 auto;
   border-radius: 10px;
   position: relative;
@@ -309,7 +309,7 @@ table th button.sort-btn i {
   right: 100%;
   bottom: 0;
   left: 0;
-  background: rgb(0, 69, 277);
+  background: #336ae9;
   width: 0;
   animation: borealisBar 2s linear infinite;
 }
