@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 export const EventsTable = ({ list, onClickItem }) => {
     const [sortConfig, setSortConfig] = useState({
         key: null,
         isAsc: false
     });
+    const tooltipRef = useRef(0);
   
     let sortableItems = [...list];
     
@@ -24,9 +25,19 @@ export const EventsTable = ({ list, onClickItem }) => {
         onClickItem(listItem);
     }
 
+    const showTooltip = (e) => {
+        const posX = `${e.clientX + 5}px`;
+        const posY = `${e.clientY + 3}px`;
+
+        tooltipRef.current.style.top = posY;
+        tooltipRef.current.style.left = posX;
+        tooltipRef.current.style.opacity = 1;
+    }
+
     return (
-        <div className='events-list'>
+        <div className='events-list standard-list'>
             <h3>Standard</h3>
+            <div ref={tooltipRef} className="tooltip">click to expand</div>
             <table>
                 <thead>
                 <tr>
@@ -65,7 +76,7 @@ export const EventsTable = ({ list, onClickItem }) => {
                 </thead>
                 <tbody>
                     {sortableItems.map((listItem, idx) => (
-                        <tr className='single-event' key={idx} onClick={() => onRowClick(listItem)}>
+                        <tr className='single-event' key={idx} onMouseLeave={() => tooltipRef.current.style.opacity = 0} onMouseMove={(e) => showTooltip(e)} onClick={() => onRowClick(listItem)}>
                             <td>{
                                 listItem['v_corporate_actions.company_full_name'] ? listItem['v_corporate_actions.company_full_name'] : '-'
                             }</td>

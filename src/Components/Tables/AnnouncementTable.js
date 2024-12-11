@@ -47,10 +47,10 @@ export const AnnouncementTable = ({ listItem }) => {
     return (
         <div className='events-list'>
             {parsedData && parsedData.map((dataItem, idx) => (
-                <>
+                <div key={idx}>
                     <h3>{dataItem['v_corporate_actions.action_type']}</h3>
-                    <div key={idx} dangerouslySetInnerHTML={{ __html: dataItem["v_corporate_actions.announcement_details"] }} />
-                </>
+                    <div dangerouslySetInnerHTML={{ __html: dataItem["v_corporate_actions.announcement_details"] }} />
+                </div>
             ))}
         </div>
     )
