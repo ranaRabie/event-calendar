@@ -37,6 +37,10 @@ export const CustomCalendar = () => {
             "endDate": filterDates.endDate
         });
     }, []);
+    
+    useEffect(() => {
+        handleSelectDate(new Date(date));
+    }, [eventsList, date]);
 
     const fetchData = async (filters) => {
         setIsLoading(true);
@@ -103,6 +107,11 @@ export const CustomCalendar = () => {
             //     })
             // );
 
+            
+            if(eventsDummy.length === 0) {
+                setError('no data');
+            }
+
             setEventsList(eventsDummy);
             setIsLoading(false);
         } catch (error) {
@@ -116,9 +125,9 @@ export const CustomCalendar = () => {
         setSelectedEvents(null);
         setSelectedItem(null);
 
-        const filteredEvents = eventsList.filter(event => event['v_corporate_actions.action_date'] === moment(value).format("YYYY-MM-DD"));
+        const filteredEvents = eventsList && eventsList.filter(event => event['v_corporate_actions.action_date'] === moment(value).format("YYYY-MM-DD"));
 
-        if (filteredEvents.length > 0) {
+        if (filteredEvents && filteredEvents.length > 0) {
             setSelectedEvents(filteredEvents);
         } else {
             setSelectedEvents(null);
@@ -139,8 +148,9 @@ export const CustomCalendar = () => {
         return { firstDateOfMonth: firstDateOfMonth(currentDate), lastDateOfMonth: lastDateOfMonth(currentDate) };
     }
 
-    const handleFilterChange = (filtersList) => {
-        fetchData(filtersList);
+    const handleFilterChange = async (filtersList) => {
+        await fetchData(filtersList);
+        setDate(new Date(filtersList.startDate));
     }
 
     const handleClosePopup = () => {
@@ -167,7 +177,6 @@ export const CustomCalendar = () => {
                     showDoubleView
                     onChange={setDate}
                     value={date}
-                    onClickDay={handleSelectDate}
                     tileClassName={({ date, view }) => {
                         if (eventsList && eventsList.find(event => event['v_corporate_actions.action_date'] === moment(date).format("YYYY-MM-DD"))) {
                             return 'highlight'
