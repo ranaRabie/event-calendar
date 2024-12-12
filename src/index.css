@@ -186,6 +186,16 @@ table th button.sort-btn i {
   cursor: pointer;
 }
 
+.table-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 0.5rem;
+}
+
+.table-scroll table {
+  padding: 0;
+}
+
 .standard-list tbody tr {
   cursor: pointer;
 }
