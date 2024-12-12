@@ -366,4 +366,5 @@ table th button.sort-btn i {
   text-align: center;
   font-size: 0.8rem;
   width: 100%;
+  box-sizing: border-box;
 }

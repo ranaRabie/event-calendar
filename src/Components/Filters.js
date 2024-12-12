@@ -26,9 +26,11 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
     const [actionType, setActionType] = useState(null);
     const [isin, setIsin] = useState(null);
 
-    const [isCompanySelected, setIsCompanySelected] = useState(false);
-    const [isCompanyShortSelected, setIsCompanyShortSelected] = useState(false);
-    const [isSymbolSelected, setIsSymbolSelected] = useState(false);
+    const [isCompanyDisabled, setIsCompanyDisabled] = useState(false);
+    const [isCompanyShortDisabled, setIsCompanyShortDisabled] = useState(false);
+    const [isSymbolDisabled, setIsSymbolDisabled] = useState(false);
+    const [isIsinDisabled, setIsIsinDisabled] = useState(false);
+    const [isIndustryDisabled, setIsIndustryDisabled] = useState(false);
     
     useEffect(() => {
         fetchFilterData();
@@ -143,37 +145,96 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
 
         setDateRange(currentDateRange);
 
-        setIsCompanySelected(false);
-        setIsSymbolSelected(false);
+        setIsCompanyShortDisabled(false);
+        setIsCompanyDisabled(false);
+        setIsIndustryDisabled(false);
+        setIsIsinDisabled(false);
+        setIsSymbolDisabled(false);
 
         updateFilters(e, currentDateRange[0], currentDateRange[1]);
     }
 
     const handleSelectChange = (option, field) => {
         if (field === 'company') {
-            setIsCompanySelected(option !== null);
-            setIsSymbolSelected(false);
-            setIsCompanyShortSelected(false);
+            if (option !== null) {
+                setIsCompanyShortDisabled(true);
+                setIsIndustryDisabled(true);
+                setIsIsinDisabled(true);
+                setIsSymbolDisabled(true);
+            } else {
+                setIsCompanyShortDisabled(false);
+                setIsCompanyDisabled(false);
+                setIsIndustryDisabled(false);
+                setIsIsinDisabled(false);
+                setIsSymbolDisabled(false);
+            }
 
             setCompany(option);
+            setIndustry(null);
+            setSymbol(null);
+            setCompanyShort(null);
+            setIsin(null);
         } else if (field === 'symbol') {
-            setIsSymbolSelected(option !== null);
-            setIsCompanySelected(false);
-            setIsCompanyShortSelected(false);
+            if (option !== null) {
+                setIsCompanyShortDisabled(true);
+                setIsIndustryDisabled(true);
+                setIsIsinDisabled(true);
+                setIsCompanyDisabled(true);
+            } else {
+                setIsCompanyShortDisabled(false);
+                setIsCompanyDisabled(false);
+                setIsIndustryDisabled(false);
+                setIsIsinDisabled(false);
+                setIsSymbolDisabled(false);
+            }
 
             setSymbol(option);
+            setIndustry(null);
+            setCompany(null);
+            setCompanyShort(null);
+            setIsin(null);
         } else if (field === 'industry') {
            setIndustry(option);
         } else if (field === 'actionType') {
             setActionType(option);
         } else if (field === 'companyShortName') {
-            setIsCompanyShortSelected(option !== null);
-            setIsCompanySelected(false);
-            setIsSymbolSelected(false);
+            if (option !== null) {
+                setIsCompanyDisabled(true);
+                setIsIndustryDisabled(true);
+                setIsIsinDisabled(true);
+                setIsSymbolDisabled(true);
+            } else {
+                setIsCompanyShortDisabled(false);
+                setIsCompanyDisabled(false);
+                setIsIndustryDisabled(false);
+                setIsIsinDisabled(false);
+                setIsSymbolDisabled(false);
+            }
 
             setCompanyShort(option);
+            setIndustry(null);
+            setSymbol(null);
+            setCompany(null);
+            setIsin(null);
         } else if (field === 'isin') {
+            if (option !== null) {
+                setIsCompanyShortDisabled(true);
+                setIsIndustryDisabled(true);
+                setIsCompanyDisabled(true);
+                setIsSymbolDisabled(true);
+            } else {
+                setIsCompanyShortDisabled(false);
+                setIsCompanyDisabled(false);
+                setIsIndustryDisabled(false);
+                setIsIsinDisabled(false);
+                setIsSymbolDisabled(false);
+            }
+
             setIsin(option);
+            setIndustry(null);
+            setSymbol(null);
+            setCompanyShort(null);
+            setCompany(null);
         }
     };
 
@@ -197,7 +258,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData && filterData.company_full_name} 
                             onChange={(e) => handleSelectChange(e, 'company')}
-                            isDisabled={isSymbolSelected || isCompanyShortSelected}
+                            isDisabled={isCompanyDisabled}
                             isClearable
                             value={company}
                         />
@@ -209,7 +270,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData && filterData.company_short_name} 
                             onChange={(e) => handleSelectChange(e, 'companyShortName')}
-                            isDisabled={isSymbolSelected || isCompanySelected}
+                            isDisabled={isCompanyShortDisabled}
                             isClearable
                             value={companyShort}
                         />
@@ -221,7 +282,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData && filterData.symbol} 
                             onChange={(e) => handleSelectChange(e, 'symbol')}
-                            isDisabled={isCompanySelected || isCompanyShortSelected}
+                            isDisabled={isSymbolDisabled}
                             isClearable
                             value={symbol}
                         />
@@ -233,7 +294,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData && filterData.industry_group_en} 
                             onChange={(e) => handleSelectChange(e, 'industry')}
-                            isDisabled={isCompanySelected || isCompanyShortSelected}
+                            isDisabled={isIndustryDisabled}
                             isClearable
                             value={industry}
                         />
@@ -256,6 +317,7 @@ export const Filters = forwardRef(({handleFilterChange}, ref) => {
                             classNamePrefix="react-select"
                             options={filterData && filterData.isin} 
                             onChange={(e) => handleSelectChange(e, 'isin')}
+                            isDisabled={isIsinDisabled}
                             isClearable   
                             value={isin}                     
                         />

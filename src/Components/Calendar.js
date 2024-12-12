@@ -40,7 +40,7 @@ export const CustomCalendar = () => {
     
     useEffect(() => {
         handleSelectDate(new Date(date));
-    }, [eventsList, date]);
+    }, [date]);
 
     const fetchData = async (filters) => {
         setIsLoading(true);
@@ -177,6 +177,7 @@ export const CustomCalendar = () => {
                     showDoubleView
                     onChange={setDate}
                     value={date}
+                    activeStartDate={date}
                     tileClassName={({ date, view }) => {
                         if (eventsList && eventsList.find(event => event['v_corporate_actions.action_date'] === moment(date).format("YYYY-MM-DD"))) {
                             return 'highlight'
