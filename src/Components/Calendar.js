@@ -22,6 +22,7 @@ export const CustomCalendar = () => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [noData, setNoData] = useState(null);
 
     useEffect(() => {
         const filterDates = filtersRef.current.getFilterDates();
@@ -109,7 +110,7 @@ export const CustomCalendar = () => {
 
             
             if(eventsDummy.length === 0) {
-                setError('no data');
+                setNoData('No Data');
             }
 
             setEventsList(eventsDummy);
@@ -167,6 +168,7 @@ export const CustomCalendar = () => {
             
             <div className='calendar-wrapper'>
                 {error && <div className='error'>{error}</div>}
+                {noData && <div className='no-data'>{noData}</div>}
                 {isLoading ? (
                     <div class="loader">
                         <div class="loaderBar"></div>

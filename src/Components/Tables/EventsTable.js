@@ -57,7 +57,7 @@ export const EventsTable = ({ list, onClickItem }) => {
                             <th>
                                 Symbol
                             </th>
-                            <th>Isin</th>
+                            <th>ISIN</th>
                             <th>Action Date</th>
                             <th>Entry Type</th>
                             <th>
