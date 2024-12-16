@@ -180,7 +180,7 @@ export const CustomCalendar = () => {
                     showDoubleView
                     onChange={setDate}
                     value={date}
-                    activeStartDate={date}
+                    activeDefaultStartDate={date}
                     tileClassName={({ date, view }) => {
                         if (eventsList && eventsList.find(event => event['v_corporate_actions.action_date'] === moment(date).format("YYYY-MM-DD"))) {
                             return 'highlight'
