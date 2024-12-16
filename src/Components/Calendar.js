@@ -47,6 +47,7 @@ export const CustomCalendar = () => {
         setIsLoading(true);
         setSelectedEvents(null);
         setError(null);
+        setNoData(null);
         
         const currentFilters = {};
 
