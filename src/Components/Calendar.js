@@ -17,6 +17,7 @@ export const CustomCalendar = () => {
     // const sdk = extensionContext.core40SDK; // Use the appropriate version of the Looker API
     const filtersRef = useRef();
     const [date, setDate] = useState(new Date());
+    const [activeStartDate, setActiveStartDate] = useState(new Date());
     const [eventsList, setEventsList] = useState(null); // Should use setEventsList when calling API
     const [selectedEvents, setSelectedEvents] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -152,7 +153,19 @@ export const CustomCalendar = () => {
 
     const handleFilterChange = async (filtersList) => {
         await fetchData(filtersList);
-        setDate(new Date(filtersList.startDate));
+
+        const dateToSet = new Date(filtersList.startDate);
+        const beginOfMonth = new Date(
+            dateToSet.getFullYear(),
+            dateToSet.getMonth(),
+            1
+        );
+        setActiveStartDate(beginOfMonth);
+        setDate(dateToSet);
+    }
+
+    const onActiveStartDateChange = ({ activeStartDate: nextActiveStartDate })  => {
+        setActiveStartDate(nextActiveStartDate);
     }
 
     const handleClosePopup = () => {
@@ -177,10 +190,11 @@ export const CustomCalendar = () => {
                 ) : ''}
                 <Calendar
                     style={{ height: 500 }}
-                    showDoubleView
+                    activeStartDate={activeStartDate}
+                    value={date} 
+                    onActiveStartDateChange={onActiveStartDateChange}
                     onChange={setDate}
-                    value={date}
-                    activeDefaultStartDate={date}
+                    showDoubleView
                     tileClassName={({ date, view }) => {
                         if (eventsList && eventsList.find(event => event['v_corporate_actions.action_date'] === moment(date).format("YYYY-MM-DD"))) {
                             return 'highlight'
