@@ -24,6 +24,7 @@ export const CustomCalendar = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [noData, setNoData] = useState(null);
+    const [isDisableFilters, setIsDisableFilters] = useState(false);
 
     useEffect(() => {
         const filterDates = filtersRef.current.getFilterDates();
@@ -46,6 +47,7 @@ export const CustomCalendar = () => {
 
     const fetchData = async (filters) => {
         setIsLoading(true);
+        setIsDisableFilters(true);
         setSelectedEvents(null);
         setError(null);
         setNoData(null);
@@ -117,8 +119,10 @@ export const CustomCalendar = () => {
 
             setEventsList(eventsDummy);
             setIsLoading(false);
+            setIsDisableFilters(false);
         } catch (error) {
             setIsLoading(false);
+            setIsDisableFilters(false);
             setError('something went wrong');
             console.error(error);
         }
@@ -178,7 +182,7 @@ export const CustomCalendar = () => {
 
     return (
         <div className='app-wrapper'>
-            <Filters handleFilterChange={handleFilterChange} ref={filtersRef} />
+            <Filters handleFilterChange={handleFilterChange} disableFilters={isDisableFilters} ref={filtersRef} />
             
             <div className='calendar-wrapper'>
                 {error && <div className='error'>{error}</div>}
